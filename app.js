@@ -14,7 +14,7 @@ var game = C({
 
 var level = C({
 	Level: {
-		layers: ['small'],
+		layers: ['bigger'],
 		game: game
 	}
 })

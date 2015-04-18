@@ -24,8 +24,8 @@ systems = {
 					var tile_data = layer.data.reduce(function(data, id, i){
 					  if(id){
 					    data.push({
-					       x: i % 10 * tileLayer.tilewidth,
-					       y: Math.floor(i / 10)* tileLayer.tileheight,
+					       x: i % layer.width * tileLayer.tilewidth,
+					       y: Math.floor(i / layer.height)* tileLayer.tileheight,
 					       id: id
 					    })
 					  }
