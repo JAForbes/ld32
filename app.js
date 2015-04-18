@@ -34,6 +34,10 @@ var player = C({
 	CollidesWith: {
 		Solid: {
 			Uncollide: {},
+			//todo-james need a more advanced way to trigger different animations and transitions
+			//kind of like the system in Provider, actions, positions, but with transitions between
+			//e.g. Landing animation when landing, jumping animation when onground and jumping
+			//Maybe `Has` is enough, but you'd need to create components and systems to signify these states
 			Sprite: { image: s_player_idle_right  },
 			Frame: { index: 0 },
 		}
@@ -93,6 +97,8 @@ LoadTiles()
 		_.each(TileMaps, function(level){
 			level.layers.forEach(function(layer){
 				layer.meta.forEach(function(meta){
+					//todo-james Need to use Tiled objects for collision instead of tiles
+					//too performance intensive, and wasteful.  Already slows down with a tiny level.
 					C({
 						Location: { x: meta.x, y: meta.y },
 						Dimensions: {width: level.tilewidth, height: level.tileheight},
