@@ -32,12 +32,12 @@ LoadTiles = function(){
 
   })
 
+  /*
+    Once all the layer sprites have loaded.  Create individual sprites
+    for every tile id.  Store in the tile layer `sprites` property.
+  */
   return Promise.settle(loading).then(function(){
-    /*
-      Creates a flat array that associates the tileLayer id with an actual sprite
-      so data id == 4, then grab sprites[3]
-      date id = 6, then grab sprites[5]
-    */
+
     var tileLayer = TileMaps.small
     tileLayer.sprites = tileLayer.tilesets
 
