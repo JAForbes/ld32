@@ -82,7 +82,7 @@
 		"ObjNum": addComponents,
 		"ObjStr": addComponents,
 
-		//todo could be confusing maybe id:4?
+		//todo getComponentsOfType could be confusing maybe id:4?
 		"Str": getComponentsOfType,
 		"Num": getEntityComponents,
 

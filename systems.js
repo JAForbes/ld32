@@ -52,5 +52,23 @@ systems = {
 
 
 		})
+	},
+
+	DrawSprites: function(){
+
+		_.each(C('DrawOrder'), function(drawOrder, id){
+			var screen = C('Screen',id)
+			drawOrder.groups.forEach(function(group){
+				_.each(C(group), function(someComponent, entity_id){
+					var sprite = C('Sprite',entity_id)
+					var location = C('Location',entity_id)
+					var dimensions = C('Dimensions',entity_id)
+
+					screen.context
+						.drawImage(sprite.image, location.x, location.y, dimensions.width, dimensions.height)
+
+				})
+			})
+		})
 	}
 }
