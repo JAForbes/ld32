@@ -8,8 +8,13 @@ var game = C({
 		context: canvas.getContext('2d'),
 		ratio: 1
 	},
-	TileLayers: {
-		Tiled: TileMaps
+	TileMaps: TileMaps
+})
+
+var level = C({
+	Level: {
+		layers: ['small'],
+		game: game
 	}
 })
 
@@ -17,7 +22,7 @@ var game = C({
 
 var activeSystems = [
 	'Screen',
-	'DrawTiles'
+	'DrawLevel'
 ]
 
 loop = function(){
