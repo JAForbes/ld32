@@ -3,25 +3,10 @@
 #sprites { display: none; }
 </style>
 <body></body>
-<script>
-_ = {
-	each: function(object, visitor){
-		Object.keys(object).forEach(function(key){
-			visitor(object[key],key,object)
-		})
-	}
-}
-</script>
+<script src='lib/lodash.min.js'></script>
+<script src='lib/bluebird.min.js'></script>
 <script src='tiles/small.js'></script>
-<script>
-_.each(TileMaps, function(level){
-	level.tilesets.forEach(function(tileset){
-		var img = new Image()
-		img.src = tileset.image.replace('.','')
-		tileset.image_data = img
-	})
-})
-</script>
+<script src='tiledParse.js'></script>
 <script src='c.js'></script>
 <script src='systems.js'></script>
 <script src='app.js'></script>

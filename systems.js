@@ -28,10 +28,9 @@ systems = {
 					  return data;
 					},[])
 
-
 					tile_data.forEach(function(tile){
-						var sourceImage = tileLayer.tilesets[0].image_data;
-						var sourceX = id*tileLayer.tilewidth;
+						var sourceImage = tileLayer.sprites[tile.id+1]
+						var sourceX = 0;
 						var sourceY = 0;
 						var tileWidth = tileLayer.tilewidth;
 						var tileHeight = tileLayer.tileheight;
@@ -42,6 +41,7 @@ systems = {
 							sourceImage, sourceX, sourceY, tileWidth, tileHeight,
 							tile.x, tile.y, dest_width, dest_height
 						)
+
 					})
 				})
 			})

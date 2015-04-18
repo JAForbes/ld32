@@ -31,5 +31,5 @@ loop = function(){
 	})
 	requestAnimationFrame(loop)
 }
-loop()
+LoadTiles().then(loop)
 
