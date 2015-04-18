@@ -29,7 +29,7 @@ systems = {
 					},[])
 
 					tile_data.forEach(function(tile){
-						var sourceImage = tileLayer.sprites[tile.id+1]
+						var sourceImage = tileLayer.sprites[tile.id-1]
 						var sourceX = 0;
 						var sourceY = 0;
 						var tileWidth = tileLayer.tilewidth;
