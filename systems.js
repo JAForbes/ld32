@@ -11,22 +11,17 @@ systems = {
 	*/
 	DrawLevel: function(){
 		_.each(C('Level'), function(level, id){
-			level.layers.forEach(function(levelName){
-				var tileLayer = C('TileMaps', level.game)[levelName]
+			level.layers.forEach(function(mapName){
+				var tileLayer = C('TileMaps', level.game)[mapName]
 				var con = C('Screen',level.game).context
 
 
-				var map = TileMaps.small
-				var tileset = map.tilesets[0]
-				var tile_data = map
-
-					.layers[0].data
-
-					.reduce(function(data, id, i){
+				tileLayer.layers.forEach(function(layer){
+					var tile_data = layer.data.reduce(function(data, id, i){
 					  if(id){
 					    data.push({
-					       x: i % 10 * map.tilewidth,
-					       y: Math.floor(i / 10)* map.tileheight,
+					       x: i % 10 * tileLayer.tilewidth,
+					       y: Math.floor(i / 10)* tileLayer.tileheight,
 					       id: id
 					    })
 					  }
@@ -34,28 +29,21 @@ systems = {
 					},[])
 
 
-				tile_data.forEach(function(tile){
-					var img = tileLayer.tilesets[0].image_data
-					con.drawImage(
-						//sourceImage
-						img,
-						//sourceX
-						id*map.tilewidth,
-						//sourceY
-						0,
-						//tileWidth
-						map.tilewidth,
-						//tileHeight
-						map.tileheight,
-						//canvas x
-						tile.x,
-						//canvas y
-						tile.y,
-						map.tilewidth,
-						map.tileheight
-					)
-				})
+					tile_data.forEach(function(tile){
+						var sourceImage = tileLayer.tilesets[0].image_data;
+						var sourceX = id*tileLayer.tilewidth;
+						var sourceY = 0;
+						var tileWidth = tileLayer.tilewidth;
+						var tileHeight = tileLayer.tileheight;
+						var dest_width = tileLayer.tilewidth;
+						var dest_height = tileLayer.tileheight;
 
+						con.drawImage(
+							sourceImage, sourceX, sourceY, tileWidth, tileHeight,
+							tile.x, tile.y, dest_width, dest_height
+						)
+					})
+				})
 			})
 
 
