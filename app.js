@@ -68,8 +68,10 @@ loop = function(){
 	activeSystems.forEach(function(name){
 		systems[name]()
 	})
-	requestAnimationFrame(loop)
 }
 LoadTiles()
-	.then(loop)
+	.then(function(){
+
+		setInterval(loop, 1)
+	})
 

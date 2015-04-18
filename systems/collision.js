@@ -102,11 +102,23 @@ systems.Uncollide = function(){
 	_.each(C('Uncollide'), function(uncollide, id){
 		var location = C('Location',id)
 		var acceleration = C('Acceleration',id)
-		acceleration.x = acceleration.y = 0
-		_.each(C('Collided', id).collisions, function(collision,id){
+		var velocity = C('Velocity',id)
 
-			location.x -= collision.response.overlapV.x
-			location.y -= collision.response.overlapV.y
+		_.each(C('Collided', id).collisions, function(collision,against){
+
+			var overlapN = collision.response.overlapN
+			var overlapV = collision.response.overlapV
+
+			if(overlapN.y){
+				acceleration.y = velocity.y = 0
+			}
+			if(overlapN.x){
+				acceleration.x = velocity.x = 0
+			}
+
+			location.y -= overlapV.y
+			location.x -= overlapV.x
+
 		})
 
 	})
