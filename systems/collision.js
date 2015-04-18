@@ -103,13 +103,20 @@ systems.Uncollide = function(){
 		var location = C('Location',id)
 		var acceleration = C('Acceleration',id)
 		var velocity = C('Velocity',id)
+		var oldV = {x: velocity.x, y: velocity.y }
+		var oldA = {x: acceleration.x, y: acceleration.y }
+
+		var largestResponse = {
+			overlapV: {x:0, y:0},
+			overlap: 0
+		};
 
 		_.each(C('Collided', id).collisions, function(collision,against){
 
 			var overlapN = collision.response.overlapN
 			var overlapV = collision.response.overlapV
 
-			//todo-james If two entities collide precisely on the corner the overlap won't resolve properely
+
 			if(overlapN.y){
 				acceleration.y = velocity.y = 0
 			}
@@ -118,10 +125,17 @@ systems.Uncollide = function(){
 			}
 
 
-			location.y -= overlapV.y
-			location.x -= overlapV.x
+			if(collision.response.overlap > largestResponse.overlap){
+				largestResponse = collision.response
+			}
+
 
 		})
+
+		var overlapV = largestResponse.overlapV
+		//todo-james If two entities collide precisely on the corner the overlap won't resolve properely, hence the 1e-4
+		location.x -= overlapV.x > 0 ? overlapV.x + 1e-4 : overlapV.x -1e-4
+		location.y -= overlapV.y > 0 ? overlapV.y + 1e-4 : overlapV.y -1e-4
 
 	})
 	C.components.Uncollide && C('RemoveCategory', {name: 'Uncollide'})

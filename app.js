@@ -22,15 +22,30 @@ var level = C({
 })
 
 var player = C({
+	Angle: { value: 0 },
 	Location: { x: 40, y: 150 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player },
 	Acceleration: { x:0, y:0 },
 	Velocity: { x:0.5, y: 0.5 },
-	//Gravity: { value: 0.4 },
+	Gravity: { value: 0.4 },
 	CollidesWith: {
 		Solid: {
 			Uncollide: {},
+		}
+	},
+	Has: {
+		'Key_A|Key_LEFT': {
+			Accelerate: { component: {x: -1} },
+		},
+		'Key_D|Key_RIGHT': {
+			Accelerate: { component: {x: 1} }
+		},
+		'Key_S|Key_DOWN': {
+			Accelerate: { component: {y: 1} }
+		},
+		'Key_W|Key_UP': {
+			Accelerate: { component: {y: -1} }
 		}
 	},
 	SAT: {}
@@ -41,8 +56,12 @@ var activeSystems = [
 	'Screen',
 	'DrawSprites',
 	'CollidesWith',
+	'CategoryAge',
+	'ComponentAge',
 	'SAT_sync',
 	'SAT',
+	'Has',
+	'Accelerate',
 	'Gravity',
 	'Vulnerable',
 	'Uncollide',
@@ -82,5 +101,8 @@ LoadTiles()
 		})
 
 	})
+	// .then(function(){
+	// 	setInterval(loop,0)
+	// })
 	.then(loop)
 
