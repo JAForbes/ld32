@@ -61,15 +61,24 @@ loop = function(){
 }
 LoadTiles()
 	.then(function(){
+		_.each(TileMaps, function(level){
+			level.layers.forEach(function(layer){
+				layer.meta.forEach(function(meta){
+					C({
+						Location: { x: meta.x, y: meta.y },
+						Dimensions: {width: level.tilewidth, height: level.tileheight},
+						Sprite: { image: level.sprites[meta.id-1] },
+
+						//todo-james set collision and other properties conditionally based on Tiled flags
+						SAT: {},
+						CollidesWith: {},
+						Solid: {}
+					})
+				})
+			})
+		})
 		TileMaps.bigger.layers[0].meta.forEach(function(meta,i){
-		  C({
-		    Location: { x: meta.x, y: meta.y },
-		    Dimensions: {width: 16, height: 16},
-		    Sprite: { image: TileMaps.bigger.sprites[meta.id-1] },
-		    SAT: {},
-		    CollidesWith: {},
-		    Solid: {}
-		  })
+
 		})
 
 	})
