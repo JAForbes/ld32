@@ -34,6 +34,8 @@ var player = C({
 	CollidesWith: {
 		Solid: {
 			Uncollide: {},
+			Sprite: { image: s_player_idle_right  },
+			Frame: { index: 0 },
 		}
 	},
 	Has: {
@@ -50,8 +52,10 @@ var player = C({
 			Frame: { component: {index: 0 } },
 		},
 		'Key_W|Key_UP': {
-			Accelerate: { component: {y: -1} }
-		}
+			Accelerate: { component: {y: -1} },
+			Sprite: { component: {image: s_player_jump_right } },
+			Frame: { component: {index: 0 } ,every: Infinity, repeat: false },
+		},
 	},
 	SAT: {}
 })
