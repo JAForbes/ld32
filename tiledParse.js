@@ -18,6 +18,23 @@ LoadTiles = function(){
     })
   }
 
+  /*
+  Store the positions, and other meta data on the TileLayer
+  */
+  _.each(TileMaps, function(level){
+    _.each(level.layers, function(layer){
+      layer.meta = layer.data.reduce(function(meta, id, i){
+        if(id){
+          meta.push({
+            id: id,
+            x: (i % layer.width) * level.tilewidth,
+            y: Math.floor( i / layer.width) * level.tileheight
+          })
+        }
+        return meta;
+      },[])
+    })
+  })
 
   /*
     Load the image data onto the tileset, instead of just the path

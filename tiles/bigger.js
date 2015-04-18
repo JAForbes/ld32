@@ -40,6 +40,13 @@
             },
          "spacing":0,
          "tileheight":16,
+         "tileproperties":
+            {
+             "4":
+                {
+                 "solid":"true"
+                }
+            },
          "tilewidth":16
         }],
  "tilewidth":16,

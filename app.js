@@ -2,6 +2,7 @@ var canvas;
 document.body.appendChild(
 	canvas = document.createElement('canvas')
 )
+
 var game = C({
 	Screen: {
 		canvas: canvas,
@@ -35,22 +36,9 @@ var player = C({
 	SAT: {}
 })
 
-var obstacle = C({
-	Location: { x: 100, y: 200 },
-	Dimensions: { width:16, height: 32 },
-	Sprite: { image: s_player },
-	Acceleration: { x:0, y:0 },
-	Velocity: { x:0, y: 0 },
-	Solid: {},
-	SAT: {},
-	CollidesWith: {}
-})
-
 
 var activeSystems = [
 	'Screen',
-	//todo-james DrawLevel should just update level sprites instead.  So we have one place where we draw
-	'DrawLevel',
 	'DrawSprites',
 	'CollidesWith',
 	'SAT_sync',
@@ -67,11 +55,23 @@ var activeSystems = [
 loop = function(){
 	activeSystems.forEach(function(name){
 		systems[name]()
+
 	})
+	requestAnimationFrame(loop)
 }
 LoadTiles()
 	.then(function(){
+		TileMaps.bigger.layers[0].meta.forEach(function(meta,i){
+		  C({
+		    Location: { x: meta.x, y: meta.y },
+		    Dimensions: {width: 16, height: 16},
+		    Sprite: { image: TileMaps.bigger.sprites[meta.id-1] },
+		    SAT: {},
+		    CollidesWith: {},
+		    Solid: {}
+		  })
+		})
 
-		setInterval(loop, 10)
 	})
+	.then(loop)
 
