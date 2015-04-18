@@ -3,6 +3,10 @@ systems = {
 		_.each(C('Screen'), function(screen, id){
 			screen.canvas.width = screen.ratio * window.innerWidth
 			screen.canvas.height = screen.ratio * window.innerHeight
+			screen.context.scale(screen.scale,screen.scale)
+			screen.context.mozImageSmoothingEnabled =
+			screen.context.msImageSmoothingEnabled =
+			screen.context.imageSmoothingEnabled = false;
 		})
 	},
 
