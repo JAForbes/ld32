@@ -37,8 +37,14 @@ systems = {
 					var location = C('Location',entity_id)
 					var dimensions = C('Dimensions',entity_id)
 					var frame = C('Frame', entity_id)
+					var scale = C('Scale', entity_id)
+
 
 					if(typeof frame.index != 'undefined'){
+
+
+
+
 						var sourceX = Math.floor(frame.index) * frame.tile_width
 						var sourceY = 0
 						screen.context

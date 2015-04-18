@@ -23,9 +23,10 @@ var level = C({
 
 var player = C({
 	Angle: { value: 0 },
+	Scale: { x: 1, y: 1 },
 	Location: { x: 40, y: 150 },
 	Dimensions: { width:16, height: 32 },
-	Sprite: { image: s_player },
+	Sprite: { image: s_player_idle_right },
 	Frame: { play_speed: 0.3, index: 0, repeat: false, tile_width: 16, tile_height: 32 },
 	Acceleration: { x:0, y:0 },
 	Velocity: { x:0.5, y: 0.5 },
@@ -38,12 +39,15 @@ var player = C({
 	Has: {
 		'Key_A|Key_LEFT': {
 			Accelerate: { component: {x: -1} },
+			Scale: { component: {x: -1} }
 		},
 		'Key_D|Key_RIGHT': {
-			Accelerate: { component: {x: 1} }
+			Accelerate: { component: {x: 1} },
+			Scale: { component: {x: 1} }
 		},
 		'Key_S|Key_DOWN': {
-			Accelerate: { component: {y: 1} }
+			Sprite: { component: {image: s_player_standup_right } },
+			Frame: { component: {index: 0 } },
 		},
 		'Key_W|Key_UP': {
 			Accelerate: { component: {y: -1} }
