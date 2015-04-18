@@ -136,8 +136,16 @@ systems = {
 			acceleration.x = 0
 			acceleration.y = 0
 
-			location.x += velocity.x
-			location.y += velocity.y
+			var new_x = location.x + velocity.x
+			var new_y = location.y + velocity.y
+			var delta = { x: new_x- location.x, y: new_y-location.y }
+
+			var easing = 2
+			location.x += delta.x / easing
+
+
+			location.y += delta.y / easing
+
 		})
 	},
 
