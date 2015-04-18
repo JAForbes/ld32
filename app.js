@@ -26,6 +26,7 @@ var player = C({
 	Location: { x: 40, y: 150 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player },
+	Frame: { play_speed: 0.3, index: 0, repeat: false, tile_width: 16, tile_height: 32 },
 	Acceleration: { x:0, y:0 },
 	Velocity: { x:0.5, y: 0.5 },
 	Gravity: { value: 0.4 },
@@ -54,6 +55,7 @@ var player = C({
 
 var activeSystems = [
 	'Screen',
+	'Frame',
 	'DrawSprites',
 	'CollidesWith',
 	'CategoryAge',

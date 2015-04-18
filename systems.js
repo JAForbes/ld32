@@ -10,6 +10,23 @@ systems = {
 		})
 	},
 
+	Frame: function(){
+		_.each(C('Frame'), function(frame, id){
+			var sprite = C('Sprite',id)
+			frame.index += frame.play_speed
+			var tiles = sprite.width / sprite.height
+			var finalIndex = (sprite.image.width / frame.tile_width) -1
+
+			if(frame.index > finalIndex){
+				if(frame.repeat){
+					frame.index = 0
+				} else {
+					frame.index = finalIndex
+				}
+			}
+		})
+	},
+
 	DrawSprites: function(){
 
 		_.each(C('DrawOrder'), function(drawOrder, id){
@@ -19,10 +36,18 @@ systems = {
 					var sprite = C('Sprite',entity_id)
 					var location = C('Location',entity_id)
 					var dimensions = C('Dimensions',entity_id)
+					var frame = C('Frame', entity_id)
 
-					screen.context
-						.drawImage(sprite.image, location.x, location.y, dimensions.width, dimensions.height)
+					if(typeof frame.index != 'undefined'){
+						var sourceX = Math.floor(frame.index) * frame.tile_width
+						var sourceY = 0
+						screen.context
+							.drawImage(sprite.image, sourceX, sourceY, frame.tile_width, frame.tile_height, location.x, location.y, dimensions.width, dimensions.height )
 
+					} else {
+						screen.context
+							.drawImage(sprite.image, location.x, location.y, dimensions.width, dimensions.height)
+					}
 				})
 			})
 		})
