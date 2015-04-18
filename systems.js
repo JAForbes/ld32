@@ -70,5 +70,53 @@ systems = {
 				})
 			})
 		})
-	}
+	},
+
+	Move: function(){
+		_.each(C('Velocity'), function(velocity, id){
+			var location = C('Location',id)
+			var acceleration = C('Acceleration',id)
+
+			velocity.x += acceleration.x
+			velocity.y += acceleration.y
+
+			acceleration.x = 0
+			acceleration.y = 0
+
+			location.x += velocity.x
+			location.y += velocity.y
+		})
+	},
+
+	Gravity: function(){
+		_.each(C('Gravity'), function(gravity, id){
+			var acceleration = C('Acceleration', id)
+			acceleration.y += gravity.value
+		})
+	},
+
+	RemoveComponent: function(){
+		_.each( C('RemoveComponent'), function(removeComponent,id){
+			delete C.components[removeComponent.name][removeComponent.entity]
+		})
+		delete C.components.RemoveComponent
+	},
+
+	RemoveCategory: function(){
+		_.each( C('RemoveCategory'), function(RemoveCategory){
+			delete C.components[RemoveCategory.name]
+		})
+		delete C.components.RemoveCategory
+	},
+
+	DeleteEntity: function(){
+		_.each( C('Delete'), function( remove, id){
+
+			_.each( _.omit( C(id*1) , remove.omit ) , function(component, key){
+				delete C.components[key][id]
+			})
+
+		})
+	},
+
 }

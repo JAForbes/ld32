@@ -25,16 +25,43 @@ var player = C({
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player },
 	Acceleration: { x:0, y:0 },
-	Velocity: { x:0, y: 0 }
+	Velocity: { x:0, y: 0 },
+	Gravity: { value: 0.4 },
+	CollidesWith: {
+		Solid: {
+			Uncollide: {},
+		}
+	},
+	SAT: {}
 })
 
+var obstacle = C({
+	Location: { x: 40, y: 200 },
+	Dimensions: { width:16, height: 32 },
+	Sprite: { image: s_player },
+	Acceleration: { x:0, y:0 },
+	Velocity: { x:0, y: 0 },
+	Solid: {},
+	SAT: {},
+	CollidesWith: {}
+})
 
 
 var activeSystems = [
 	'Screen',
 	//todo-james DrawLevel should just update level sprites instead.  So we have one place where we draw
 	'DrawLevel',
-	'DrawSprites'
+	'DrawSprites',
+	'CollidesWith',
+	'SAT_sync',
+	'SAT',
+	'Gravity',
+	'Vulnerable',
+	'Uncollide',
+	'Move',
+	'DeleteEntity',
+	'RemoveComponent',
+	'RemoveCategory'
 ]
 
 loop = function(){

@@ -1,1 +1,1 @@
-grep -n todo-james  *.js | sed -r 's:.*//todo-james:-:'
+find | grep js | xargs grep -n todo-james | sed 's:.*//todo-james:\n-:'

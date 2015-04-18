@@ -8,5 +8,7 @@
   },
   "author": "james.a.forbes@gmail.com <=> (http://james-forbes.com)",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {
+    "sat": "^0.5.0"
+  }
 }
