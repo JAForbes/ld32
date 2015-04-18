@@ -21,12 +21,12 @@ var level = C({
 })
 
 var player = C({
-	Location: { x: 40, y: 80 },
+	Location: { x: 40, y: 150 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player },
 	Acceleration: { x:0, y:0 },
-	Velocity: { x:0, y: 0 },
-	Gravity: { value: 0.4 },
+	Velocity: { x:0.5, y: 0.5 },
+	//Gravity: { value: 0.4 },
 	CollidesWith: {
 		Solid: {
 			Uncollide: {},
@@ -36,7 +36,7 @@ var player = C({
 })
 
 var obstacle = C({
-	Location: { x: 40, y: 200 },
+	Location: { x: 100, y: 200 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player },
 	Acceleration: { x:0, y:0 },
@@ -72,6 +72,6 @@ loop = function(){
 LoadTiles()
 	.then(function(){
 
-		setInterval(loop, 1)
+		setInterval(loop, 10)
 	})
 

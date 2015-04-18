@@ -109,12 +109,15 @@ systems.Uncollide = function(){
 			var overlapN = collision.response.overlapN
 			var overlapV = collision.response.overlapV
 
+			//todo-james Setting to a small number instead of zero, so that corner collisions work
+			//A bit hacky, find a better solution
 			if(overlapN.y){
-				acceleration.y = velocity.y = 0
+				acceleration.y = velocity.y = -1e-3
 			}
 			if(overlapN.x){
-				acceleration.x = velocity.x = 0
+				acceleration.x = velocity.x = -1e-3
 			}
+
 
 			location.y -= overlapV.y
 			location.x -= overlapV.x
