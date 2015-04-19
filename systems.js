@@ -217,6 +217,26 @@ systems = {
 		})
 	},
 
+	Hidden: function(){
+		_.each( C('Hider'), function(hider, entity_id){
+			var location = C('Location', entity_id)
+			var crouched = C('Action', entity_id).value == 'crouch'
+			//todo-james Handle hiding behind objects in a data driven way
+			var near = _.any( C('Crate'), function(crate, other_id){
+				var crate_location = C('Location',other_id)
+				var crate_dimensions = C('Dimensions',other_id)
+
+				var distance = Math.sqrt( Math.pow(crate_location.x - location.x,2) +  Math.pow(crate_location.y - location.y,2))
+				var near = distance < crate_dimensions.width * 1.2
+
+				return near
+
+			})
+			near && crouched && C('Hidden', {}, entity_id)
+		})
+		C('RemoveCategory',{name: 'Hidden'})
+	},
+
 	Sight: function(){
 		_.each( C('See'), function(sightGroups, entity_id){
 			_.each(sightGroups, function(componentsToActivate, groupName){
@@ -224,21 +244,23 @@ systems = {
 					var a = C(entity_id)
 					var b = C(other_id)
 
-					var direction = b.Location.x < a.Location.x ? 'left' : 'right'
-					var correctDirection = direction == a.Position.value
+					if(!b.Hidden){
+						var direction = b.Location.x < a.Location.x ? 'left' : 'right'
+						var correctDirection = direction == a.Position.value
 
-					var top = b.Location.y - b.Dimensions.height/2
-					var bottom = b.Location.y + b.Dimensions.height/2
+						var top = b.Location.y - b.Dimensions.height/2
+						var bottom = b.Location.y + b.Dimensions.height/2
 
-					var sightY = a.Location.y + a.Sight.offset.y
-					var correctHeight = sightY < bottom && sightY > top
-					var correctRange = a.Sight.range > Math.abs(b.Location.x - a.Location.x)
+						var sightY = a.Location.y + a.Sight.offset.y
+						var correctHeight = sightY < bottom && sightY > top
+						var correctRange = a.Sight.range > Math.abs(b.Location.x - a.Location.x)
 
-					if( correctDirection && correctHeight && correctRange ){
-						//todo-james move the sight action to another system,
-						//keep detection separate so other systems can make use of sight
+						if( correctDirection && correctHeight && correctRange ){
+							//todo-james move the sight action to another system,
+							//keep detection separate so other systems can make use of sight
 
-						C(componentsToActivate, entity_id)
+							C(componentsToActivate, entity_id)
+						}
 					}
 				})
 			})

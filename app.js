@@ -41,6 +41,7 @@ var player = C({
 	Gravity: { value: 0.4 },
 	Name: { value: 'player' },
 	Player: {},
+	Hider: {},
 	Friction: { value: 0.9 },
 	Action: {
 		stack: [] , value: 'idle',
@@ -137,7 +138,7 @@ var overlord = C({
 	Sight: { range: 75, offset: {x:0, y: -10} },
 	See: {
 		Player: {
-			//Log: { message: 'I saw a player' }
+			Log: { message: 'I saw a player' }
 		}
 	}
 })
@@ -154,6 +155,7 @@ var activeSystems = [
 	'ComponentAge',
 	'SAT_sync',
 	'SAT',
+	'Hidden',
 	'Sight',
 	'Log',
 	'Has',
