@@ -18,7 +18,7 @@ systems = {
 			var finalIndex = (sprite.image.width / frame.tile_width) -1
 
 
-			if(frame.index > finalIndex){
+			if(frame.index >= finalIndex){
 				if(frame.repeat){
 					frame.index = 0
 				} else {
@@ -55,11 +55,12 @@ systems = {
 	//todo-james store sprites as a component instead of globally
 	Action: function(){
 		_.each( C('Action'), function run(action, id) {
+
+
 			var name = C('Name',id);
 			var position = C('Position',id);
 			var sprite = C('Sprite',id)
 			var frame = C('Frame',id)
-
 			var finalIndex = Math.floor((sprite.image.width / frame.tile_width) -1)
 			if(!frame.repeat && !frame.hold && frame.index >= finalIndex){
 
@@ -126,6 +127,19 @@ systems = {
 			landed && C('Landed',{},id) && C('RemoveCategory', {name: 'Landed'})
 		})
 	},
+	CancelAction: function(){
+		_.each( C('CancelAction'), function(cancel, id){
+
+			var action = C('Action',id)
+
+			//todo-james handle the idle default within the action system
+			action.value == cancel.action && (
+				(action.value = action.stack.pop() || 'idle')
+			)
+			cancel.stack = _.without(cancel.stack, cancel.action)
+		})
+		C.components.CancelAction && C('RemoveCategory', {name: 'CancelAction'})
+	},
 
 	CancelFall: function(){
 		//todo-james Make the action update, with config and idle default etc, handled by another system
@@ -171,6 +185,40 @@ systems = {
 		})
 	},
 
+	// If something did exist add some components to your self
+	//todo-james don't loop through components, loop through had and check age is -1
+	Had: function(){
+		var CategoryAge = C.CategoryAge
+
+
+		_.each( C('Had') , function(had, id){
+			_.each(had, function(components, hadNames){
+				hadNames.split('|').forEach(function(hadName){
+
+					var self = hadName.indexOf('@') > -1
+					hadName = hadName.replace('@','')
+
+					var componentAge = C.ComponentAge[hadName] || {}
+					var wasOnSelf = !!(self && componentAge[id])
+					var wasOnAnyone = !!(_.max(componentAge))
+					if( wasOnSelf || !self && wasOnAnyone ){
+
+						var age = componentAge[id] || _.max(componentAge)
+
+						_.each( components, function(component, componentName){
+
+
+							if( age == -1){
+								C(componentName, component, id*1)
+							}
+						})
+					}
+				})
+
+			})
+		})
+	},
+
 	ComponentAge: function(){
 		if (!C.ComponentAge) {
 			C.ComponentAge = {}
@@ -179,18 +227,31 @@ systems = {
 			C.ComponentAge[category] = C.ComponentAge[category] || {}
 			for(var entity in C.components[category]){
 				C.ComponentAge[category][entity] = C.ComponentAge[category][entity] || 0
+				var recordedAsDead = C.ComponentAge[category][entity] < 0
+				if(recordedAsDead){
+					C.ComponentAge[category][entity] = 0
+				}
+
 				C.ComponentAge[category][entity]++
 			}
 		}
 		for (var category in C.ComponentAge ){
 			for( var entity in C.ComponentAge[category]) {
-				if( !C.components[category]  || !C.components[category][entity] ) {
-					if (C.ComponentAge[category][entity] > -1){
-						C.ComponentAge[category][entity] = 0
+				var entireCategoryEmpty = !C.components[category]
+				var componentRemoved = entireCategoryEmpty || !C.components[category][entity]
+				var recordedAsAlive = C.ComponentAge[category][entity] > -1
+				var ageCategory = C.ComponentAge[category]
+
+				if( entireCategoryEmpty || componentRemoved ) {
+					if (recordedAsAlive){
+						ageCategory[entity] = 0
 					}
-					C.ComponentAge[category][entity]--
-					if( C.ComponentAge[category][entity] < -100){
-						delete C.ComponentAge[category][entity]
+					//decrement the removed
+					ageCategory[entity]--
+
+					if( ageCategory[entity] < -100){
+						//stop tracking
+						delete ageCategory[entity]
 					}
 				}
 			}

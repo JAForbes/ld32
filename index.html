@@ -14,19 +14,38 @@ img {
 	<div id='sprites'>
 		<img id='s_player_idle_right' src='./img/player.png'></img>
 		<img id='s_player_standup_right' src='./img/player_standup_right.png'></img>
+		<img id='s_player_crouch_right' src='./img/player_crouch_right.png'></img>
 		<img id='s_player_jump_right' src='./img/player_jump_right.png'></img>
 		<img id='s_player_fall_right' src='./img/player_fall_right.png'></img>
 	</div>
 </body>
+<script src='lib/lodash.min.js'></script>
 <script>
-flipHorizontal = function(can, original){
+flipHorizontal = function(can, original, tile_width){
   var img = new Image()
 
   var run = function(){
   	can.width = original.width
   	can.height = original.height
-  	can.getContext('2d').scale(-1,1)
-  	can.getContext('2d').drawImage(original,-can.width,0)
+  	var con = can.getContext('2d')
+
+  	var n = Math.floor(original.width / tile_width )
+
+  	_.times(n, function(i){
+  		var src_x = original.width - (i+1) * tile_width
+  		var dest_x = i * tile_width
+
+  		con.save()
+  		con.translate(original.width,0)
+  		con.scale(-1,1)
+		con.drawImage(original,
+			src_x, 0,
+			tile_width, original.height,
+			dest_x, 0,
+			tile_width, original.height
+		)
+		con.restore()
+  	})
 	img.src = can.toDataURL()
   }
   original.width > 0 && run() || (original.onload=run)
@@ -36,13 +55,14 @@ flipHorizontal = function(can, original){
 
 }
 var can = document.createElement('canvas')
-s_player_idle_left = flipHorizontal(can, s_player_idle_right)
-s_player_standup_left = flipHorizontal(can, s_player_standup_right)
-s_player_jump_left = flipHorizontal(can, s_player_jump_right)
-s_player_fall_left = flipHorizontal(can, s_player_fall_right)
+s_player_idle_left = flipHorizontal(can, s_player_idle_right,16)
+s_player_standup_left = flipHorizontal(can, s_player_standup_right,16)
+s_player_jump_left = flipHorizontal(can, s_player_jump_right,16)
+s_player_fall_left = flipHorizontal(can, s_player_fall_right,16)
+s_player_crouch_left = flipHorizontal(can, s_player_crouch_right,16)
 </script>
 <script src='node_modules/sat/SAT.js'></script>
-<script src='lib/lodash.min.js'></script>
+
 <script src='lib/bluebird.min.js'></script>
 <script src='tiles/bigger.js'></script>
 <script src='tiledParse.js'></script>

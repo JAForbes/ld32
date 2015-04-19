@@ -51,7 +51,8 @@ var player = C({
 			jump: { repeat: false, play_speed: 0.3 },
 			fall: { repeat: true, play_speed: 0.3 },
 			run: { repeat: true, play_speed: 0.3 },
-			standup: { repeat: false, play_speed: 0.3 }
+			standup: { repeat: false, play_speed: 0.3 },
+			crouch: { repeat: true, play_speed: 0.3 },
 		}
 
 	},
@@ -72,11 +73,16 @@ var player = C({
 			Position: { component: {value: 'right'}} ,
 		},
 		'Key_S|Key_DOWN': {
-			PushActions: { component: {actions: ['standup']}, every: Infinity }
+			PushActions: { component: {actions: ['standup','crouch']}, every: Infinity }
 		},
 		'Key_W|Key_UP': {
 			Accelerate: { component: {y: -1} },
 			PushActions: { component: {actions: ['fall','jump']}, every: Infinity }
+		}
+	},
+	Had: {
+		'Key_S|Key_DOWN': {
+			CancelAction: { action:'crouch' }
 		}
 	},
 	SAT: {}
@@ -85,9 +91,9 @@ var player = C({
 
 var activeSystems = [
 	'Screen',
-	'Frame',
 	'PushActions',
 	'Action',
+	'Frame',
 	'DrawSprites',
 	'CollidesWith',
 	'CategoryAge',
@@ -95,12 +101,14 @@ var activeSystems = [
 	'SAT_sync',
 	'SAT',
 	'Has',
+	'Had',
 	'Accelerate',
 	'Gravity',
 	'Vulnerable',
 	'Uncollide',
 	'Landed',
 	'CancelFall', //todo-james figure out a way to use Has instead of writing a new system for disabling fall
+	'CancelAction',
 	'Move',
 	'DeleteEntity',
 	'RemoveComponent',
@@ -140,7 +148,7 @@ LoadTiles()
 
 	})
 	// .then(function(){
-	// 	setInterval(loop,0)
+	// 	setInterval(loop,500)
 	// })
 	.then(loop)
 
