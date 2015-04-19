@@ -1,6 +1,6 @@
 {
   "name": "ld32",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Ludum Dare 32: An Unconventional Weapon",
   "main": "app.js",
   "scripts": {
