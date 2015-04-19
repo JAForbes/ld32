@@ -17,6 +17,7 @@ img {
 		<img id='s_player_crouch_right' src='./img/player_crouch_right.png'></img>
 		<img id='s_player_jump_right' src='./img/player_jump_right.png'></img>
 		<img id='s_player_fall_right' src='./img/player_fall_right.png'></img>
+		<img id='s_player_run_right' src='./img/player_run_right.png'></img>
 	</div>
 </body>
 <script src='lib/lodash.min.js'></script>
@@ -55,7 +56,7 @@ flipHorizontal = function(can, original, tile_width){
 
 }
 var can = document.createElement('canvas')
-;['idle','standup','jump','fall','crouch']
+;['idle','standup','jump','fall','crouch','run']
 	.forEach(function(name){
 		window['s_player_'+name+'_left'] = flipHorizontal(can, window['s_player_'+name+'_right'],16)
 	})

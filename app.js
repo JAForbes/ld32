@@ -51,7 +51,7 @@ var player = C({
 			//that analyses if you are still in the air
 			jump: { repeat: false, play_speed: 0.3 },
 			fall: { repeat: true, play_speed: 0.3 },
-			run: { repeat: true, play_speed: 0.3 },
+			run: { repeat: false, play_speed: 0.3 },
 			standup: { repeat: false, play_speed: 0.3 },
 			crouch: { repeat: true, play_speed: 0.3 },
 		}
@@ -68,10 +68,12 @@ var player = C({
 		'Key_A|Key_LEFT': {
 			Accelerate: { component: {x: -1} },
 			Position: { component: {value: 'left'}},
+			PushActions: { component: {actions: ['run']} }
 		},
 		'Key_D|Key_RIGHT': {
 			Accelerate: { component: {x: 1} },
 			Position: { component: {value: 'right'}} ,
+			PushActions: { component: {actions: ['run']} }
 		},
 		'Key_S|Key_DOWN': {
 			PushActions: { component: {actions: ['standup','crouch']}, every: Infinity }
@@ -84,6 +86,9 @@ var player = C({
 	Had: {
 		'Key_S|Key_DOWN': {
 			CancelAction: { action:'crouch' }
+		},
+		'Key_A|Key_LEFT|Key_D|Key_RIGHT': {
+			CancelAction: { action:'run' }
 		}
 	},
 	SAT: {},
