@@ -17,6 +17,28 @@ img {
 		<img id='s_player_jump_right' src='./img/player_jump_right.png'></img>
 	</div>
 </body>
+<script>
+flipHorizontal = function(can, original){
+  var img = new Image()
+
+  var run = function(){
+  	can.width = original.width
+  	can.height = original.height
+  	can.getContext('2d').scale(-1,1)
+  	can.getContext('2d').drawImage(original,-can.width,0)
+	img.src = can.toDataURL()
+  }
+  original.width > 0 && run() || (original.onload=run)
+
+
+  return img
+
+}
+var can = document.createElement('canvas')
+s_player_idle_left = flipHorizontal(can, s_player_idle_right)
+s_player_standup_left = flipHorizontal(can, s_player_standup_right)
+s_player_jump_left = flipHorizontal(can, s_player_jump_right)
+</script>
 <script src='node_modules/sat/SAT.js'></script>
 <script src='lib/lodash.min.js'></script>
 <script src='lib/bluebird.min.js'></script>

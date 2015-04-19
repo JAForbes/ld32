@@ -28,6 +28,15 @@ systems = {
 		})
 	},
 
+	//todo-james Have a general push component/system
+	//todo-james Don't push the same thing twice, or call PopActions before hand in the Has hash
+	PushActions: function(){
+		_.each( C('PushActions'), function(pushActions, id){
+			C('Action',id).stack = C('Action',id).stack.concat(pushActions.actions)
+		})
+		C.components.PushActions && C('RemoveCategory', {name: 'PushActions'})
+	},
+
 	/*
 		Automatically transitions between different animation sprites.
 
@@ -46,7 +55,7 @@ systems = {
 	*/
 	//todo-james store sprites and action settings as a component instead of globally
 	Action: function(){
-		_.each( C('Action'), function (action, id) {
+		_.each( C('Action'), function run(action, id) {
 			var name = C('Name',id);
 			var position = C('Position',id);
 			var sprite = C('Sprite',id)
@@ -54,14 +63,14 @@ systems = {
 
 			var finalIndex = Math.floor((sprite.image.width / frame.tile_width) -1)
 
-			if(!frame.repeat && frame.index >= finalIndex){
+			if(!frame.repeat && !frame.hold && frame.index >= finalIndex){
 
 				action.value = action.stack.pop() || 'idle'
 
 				sprite.image = window['s_'+name.value+'_'+action.value+'_'+position.value]
 
 				//mixin action settings to the frame
-				C('Frame', actions[action.value], id )
+				C('Frame', action.config[action.value], id )
 				//reset the frame
 				frame.index = 0
 			}
