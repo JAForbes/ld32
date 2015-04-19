@@ -101,7 +101,7 @@ systems = {
 	*/
 	//todo-james store sprites as a component instead of globally
 	Action: function(){
-		_.each( C('Action'), function run(action, id) {
+		_.each( C('Action'), function (action, id) {
 
 
 			var name = C('Name',id);
@@ -127,6 +127,22 @@ systems = {
 
 				!position_update && (frame.index = 0)
 			}
+		})
+	},
+
+	ActionTag: function(){
+		_.each( C('Action'), function(action, id){
+			//Remove stale action tags
+			Object.keys(C(id))
+				.filter(function(name){
+					return name.indexOf('Action_') > -1
+				})
+				.forEach(function(actionName){
+					delete C.components[actionName][id]
+				})
+
+			//Add new tag
+			C('Action_'+action.value,{},id)
 		})
 	},
 

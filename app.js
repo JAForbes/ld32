@@ -29,7 +29,7 @@ var actions = {
 
 var player = C({
 	Angle: { value: 0 },
-	Location: { x: 150, y: 130 },
+	Location: { x: 50, y: 130 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player_idle_right },
 	Frame: { play_speed: 0.3, index: 0, repeat: false, tile_width: 16, tile_height: 32 },
@@ -61,7 +61,8 @@ var player = C({
 			Uncollide: {}
 		},
 		Projectile: {
-			PushActions: { component: {actions: ['dead','die']} }
+			//todo-james create a component for every action so you can react to them via Has
+			PushActions: { actions: ['dead','die']},
 		}
 	},
 	Has: {
@@ -77,6 +78,9 @@ var player = C({
 		},
 		'Key_S|Key_DOWN': {
 			PushActions: { component: {actions: ['standup','crouch']}, every: Infinity }
+		},
+		'@Action_dead': {
+			Remove: { component: {} }
 		}
 	},
 	Had: {
@@ -147,6 +151,7 @@ var activeSystems = [
 	'Camera',
 	'PushActions',
 	'Action',
+	'ActionTag',
 	'Frame',
 	'DrawSprites',
 	'CollidesWith',
