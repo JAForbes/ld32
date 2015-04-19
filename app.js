@@ -33,7 +33,7 @@ var actions = {
 
 var player = C({
 	Angle: { value: 0 },
-	Location: { x: 40, y: 150 },
+	Location: { x: 150, y: 150 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player_idle_right },
 	Frame: { play_speed: 0.3, index: 0, repeat: false, tile_width: 16, tile_height: 32 },
@@ -106,6 +106,32 @@ var cameraBot = C({
 	C('Tether',{ entity: player , elasticity: 0.1 },cameraBot)
 	C('Camera',game).tracking = cameraBot
 
+
+var overlord = C({
+	Angle: { value: 0 },
+	Location: { x: 200, y: 150 },
+	Dimensions: { width:16, height: 32 },
+	Sprite: { image: s_player_idle_right },
+	Frame: { play_speed: 0.3, index: 0, repeat: false, tile_width: 16, tile_height: 32 },
+	Acceleration: { x:0, y:0 },
+	Velocity: { x:0.5, y: 0.5 },
+	Gravity: { value: 0.4 },
+	Name: { value: 'player' },
+	Friction: { value: 0.9 },
+	Position: { value: 'left' },
+	Action: {
+		stack: [] , value: 'idle',
+		hold: false,
+		config: { idle: { repeat: false, play_speed: 0.3 } }
+	},
+	SAT: {},
+	SATSync: {},
+	CollidesWith: {
+		Solid: {
+			Uncollide: {}
+		}
+	},
+})
 
 var activeSystems = [
 	'Screen',
