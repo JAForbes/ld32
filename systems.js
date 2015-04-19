@@ -265,7 +265,7 @@ systems = {
 			var camera = C('Camera',1).last_position
 				camera.scale = C('Camera',1).scale
 			var p = C('Location',id)
-			if( Math.abs(p.x-camera.x) > canvas.width/(2 * camera.scale) || Math.abs(p.y-camera.y) > canvas.height/(2 * camera.scale) ){
+			if( Math.abs(p.x-camera.x) > canvas.width/(camera.scale) || Math.abs(p.y-camera.y) > canvas.height/(camera.scale) ){
 				C('Remove',{},id)
 			}
 		})
@@ -283,8 +283,9 @@ systems = {
 				Location: {x: location.x-13, y: location.y + 13},
 				Velocity: { x: -10, y: 0 },
 				Dimensions: { width: 16, height: 4 },
-				//SAT: {},
-				//CollidesWith: {},
+				SAT: {},
+				SATSync: {},
+				CollidesWith: {},
 				Projectile: {},
 				Acceleration: { x:0, y:0 },
 				GarbageCollected: {}
@@ -480,6 +481,30 @@ systems = {
 		_.each(C('Gravity'), function(gravity, id){
 			var acceleration = C('Acceleration', id)
 			acceleration.y += gravity.value
+		})
+	},
+
+	RemoveEntity: function(){
+		_.each(C('Remove'), function(remove,id){
+			var removed = {}
+			removed.Has = C('Has',id)
+			removed.After = C('After',id)
+			removed.Delete = {}
+			//todo should this be a part of C(id,null)?
+			//like C(id,null,omit)
+			if( remove.omit ){
+				_.each( _.omit( C(id*1), remove.omit ) , function(component, key){
+					delete C.components[key][id]
+				})
+			} else {
+				C(id,null)
+			}
+			//Move this Has thing into omit?
+			C.components['Has'] = C.components['Has'] || {}
+			C.components['Has'][id] = removed.Has
+
+			C.components['Delete'] = C.components['Delete'] || {}
+			C.components['Delete'][id] = { omit: remove.omit || [] }
 		})
 	},
 

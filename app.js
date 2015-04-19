@@ -29,7 +29,7 @@ var actions = {
 
 var player = C({
 	Angle: { value: 0 },
-	Location: { x: 50, y: 150 },
+	Location: { x: 150, y: 130 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player_idle_right },
 	Frame: { play_speed: 0.3, index: 0, repeat: false, tile_width: 16, tile_height: 32 },
@@ -59,6 +59,9 @@ var player = C({
 	CollidesWith: {
 		Solid: {
 			Uncollide: {}
+		},
+		Projectile: {
+			PushActions: { component: {actions: ['dead','die']} }
 		}
 	},
 	Has: {
@@ -169,7 +172,8 @@ var activeSystems = [
 	'GarbageCollection',
 	'DeleteEntity',
 	'RemoveComponent',
-	'RemoveCategory'
+	'RemoveCategory',
+	'RemoveEntity'
 ]
 
 loop = function(){

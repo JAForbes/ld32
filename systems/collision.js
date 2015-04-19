@@ -87,6 +87,8 @@ systems.Vulnerable = function(){
 		var collidedWithThreat = C.components[against_type] && C.components[against_type][against_id]
 	 	if(collidedWithThreat){
 	 		_.each(componentsToAdd, function(component, componentName){
+	 			component = _.clone(component)
+	 			component.other_id = against_id
 				C(componentName,component,entity_id)
 			})
 	 	}
@@ -110,33 +112,22 @@ systems.Uncollide = function(){
 		var oldV = {x: velocity.x, y: velocity.y }
 		var oldA = {x: acceleration.x, y: acceleration.y }
 
-		var largestResponse = {
-			overlapV: {x:0, y:0},
-			overlap: 0
-		};
-
-		_.each(C('Collided', id).collisions, function(collision,against){
-
-			var overlapN = collision.response.overlapN
-			var overlapV = collision.response.overlapV
+		var collision = C('Collided', id).collisions[uncollide.other_id]
 
 
-			if(overlapN.y){
-				acceleration.y = velocity.y = 0
-			}
-			if(overlapN.x){
-				acceleration.x = velocity.x = 0
-			}
+		var overlapN = collision.response.overlapN
+		var overlapV = collision.response.overlapV
 
 
-			if(collision.response.overlap > largestResponse.overlap){
-				largestResponse = collision.response
-			}
+		if(overlapN.y){
+			acceleration.y = velocity.y = 0
+		}
+		if(overlapN.x){
+			acceleration.x = velocity.x = 0
+		}
 
 
-		})
-
-		var overlapV = largestResponse.overlapV
+		var overlapV = collision.response.overlapV
 		//todo-james If two entities collide precisely on the corner the overlap won't resolve properely, hence the 1e-4
 		location.x -= overlapV.x > 0 ? overlapV.x + 1e-4 : overlapV.x -1e-4
 		location.y -= overlapV.y > 0 ? overlapV.y + 1e-4 : overlapV.y -1e-4
