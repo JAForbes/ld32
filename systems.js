@@ -280,7 +280,7 @@ systems = {
 			C({
 				Angle: { value: 0 },
 				Sprite: { image: s_laser },
-				Location: {x: location.x, y: location.y + 16},
+				Location: {x: location.x-13, y: location.y + 13},
 				Velocity: { x: -10, y: 0 },
 				Dimensions: { width: 16, height: 4 },
 				//SAT: {},
