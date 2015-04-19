@@ -28,19 +28,6 @@ var actions = {
 }
 
 var player = C({
-	Repeat: {
-		Procedure: {
-			component: {
-				steps: [
-					{ time: 100, components: { Position: {value: 'left' } } },
-					{ time: 100, components: { Position: {value: 'right' , test:true} } },
-				],
-				current: 0,
-				clock: 0
-			},
-			remaining: Infinity
-		}
-	},
 	Angle: { value: 0 },
 	Location: { x: 50, y: 130 },
 	Dimensions: { width:16, height: 32 },
@@ -130,6 +117,19 @@ var cameraBot = C({
 
 
 var overlord = C({
+	Repeat: {
+		Procedure: {
+			component: {
+				steps: [
+					{ time: 200, components: { Position: {value: 'left' } } },
+					{ time: 200, components: { Position: {value: 'right'} } },
+				],
+				current: 0,
+				clock: 0
+			},
+			remaining: Infinity
+		}
+	},
 	Enemy: {},
 	Angle: { value: 0 },
 	Location: { x: 200, y: 150 },
