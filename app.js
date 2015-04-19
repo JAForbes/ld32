@@ -45,8 +45,6 @@ var player = C({
 		hold: false,
 		config: {
 			idle: { repeat: false, play_speed: 0.3 },
-			//todo-james alter hold property on jump with some other system
-			//that analyses if you are still in the air
 			jump: { repeat: false, play_speed: 0.3 },
 			fall: { repeat: true, play_speed: 0.3 },
 			run: { repeat: false, play_speed: 0.06 },
