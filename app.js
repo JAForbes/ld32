@@ -171,6 +171,7 @@ var activeSystems = [
 	'Friction',
 	'Tether',
 	'Move',
+	'GarbageCollection',
 	'DeleteEntity',
 	'RemoveComponent',
 	'RemoveCategory'

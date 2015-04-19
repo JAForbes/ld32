@@ -270,6 +270,19 @@ systems = {
 
 	},
 
+	GarbageCollection: function(){
+		var screen = C('Screen',1)
+		var canvas = screen.canvas
+		_.each(C('GarbageCollected'),function(gc, id){
+			var camera = C('Camera',1).last_position
+				camera.scale = C('Camera',1).scale
+			var p = C('Location',id)
+			if( Math.abs(p.x-camera.x) > canvas.width/(2 * camera.scale) || Math.abs(p.y-camera.y) > canvas.height/(2 * camera.scale) ){
+				C('Remove',{},id)
+			}
+		})
+	},
+
 	//todo-james have an every property maybe...
 	//todo-james GC off screen entities
 	Attack: function(){
@@ -287,6 +300,7 @@ systems = {
 				//CollidesWith: {},
 				Projectile: {},
 				Acceleration: { x:0, y:0 },
+				GarbageCollected: {}
 			})
 		})
 		C('RemoveCategory', {name: 'Attack'})
