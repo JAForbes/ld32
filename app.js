@@ -29,7 +29,7 @@ var actions = {
 
 var player = C({
 	Angle: { value: 0 },
-	Location: { x: 50, y: 250 },
+	Location: { x: 130, y: 250 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player_idle_right },
 	Frame: { play_speed: 0.3, index: 0, repeat: false, tile_width: 16, tile_height: 32 },
@@ -89,7 +89,7 @@ var player = C({
 			PushActions: { component: {actions: ['run']} }
 		},
 		'Key_S|Key_DOWN': {
-			PushActions: { component: {actions: ['standup','crouch']}, every: Infinity }
+			ReplaceActions: { component: {actions: ['standup','crouch']}, every: Infinity }
 		},
 		'@Action_dead': {
 			Remove: { component: {} }
@@ -224,6 +224,10 @@ C(TurningGuard)
 //create patrolling guard
 var patrolling = C(PatrollingGuard)
 C('Location', { x: 450, y: -200}, patrolling)
+
+//create guard
+var turning = C(TurningGuard)
+C(turning).Location.x = 550
 
 
 var activeSystems = [
