@@ -39,6 +39,10 @@
                  "y":272
                 }],
          "opacity":1,
+         "properties":
+            {
+             "Solid":"true"
+            },
          "type":"objectgroup",
          "visible":true,
          "width":100,
@@ -52,7 +56,7 @@
          "opacity":1,
          "properties":
             {
-             "Tag":"Crate"
+             "Crate":"true"
             },
          "type":"tilelayer",
          "visible":true,

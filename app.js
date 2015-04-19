@@ -190,7 +190,11 @@ LoadTiles()
 						Sprite: { image: level.sprites[meta.id-1] }
 					})
 					if(layer.properties){
-						C('TiledProps', layer.properties, entity)
+						var components = _.reduce(layer.properties, function(components, val, key){
+							components[key] = { value: val }
+							return components;
+						},{})
+						C(components,entity)
 					}
 				})
 				if(layer.objects){
@@ -199,17 +203,20 @@ LoadTiles()
 						var entity = C({
 						    CollidesWith: {},
 						    SAT: { box: new SAT.Box(new SAT.Vector(object.x,object.y), object.width, object.height) },
-						    Solid: {}
+
+						    //todo-james setup a lot of these custom properties via TiledProps
+
 						})
 						if(layer.properties){
-							C('TiledProps', layer.properties, entity)
+							var components = _.reduce(layer.properties, function(components, val, key){
+								components[key] = { value: val }
+								return components;
+							},{})
+							C(components,entity)
 						}
 					})
 				}
 			})
-		})
-		TileMaps.bigger.layers[0].meta.forEach(function(meta,i){
-
 		})
 
 	})
