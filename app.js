@@ -76,10 +76,7 @@ var player = C({
 		},
 		'Key_W|Key_UP': {
 			Accelerate: { component: {y: -1} },
-			PushActions: { component: {actions: ['jump']}, every: Infinity }
-		},
-		'Landed': {
-			PopActions: {}
+			PushActions: { component: {actions: ['fall','jump']}, every: Infinity }
 		}
 	},
 	SAT: {}
@@ -102,6 +99,8 @@ var activeSystems = [
 	'Gravity',
 	'Vulnerable',
 	'Uncollide',
+	'Landed',
+	'CancelFall', //todo-james figure out a way to use Has instead of writing a new system for disabling fall
 	'Move',
 	'DeleteEntity',
 	'RemoveComponent',

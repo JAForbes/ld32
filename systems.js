@@ -61,13 +61,16 @@ systems = {
 			var frame = C('Frame',id)
 
 			var finalIndex = Math.floor((sprite.image.width / frame.tile_width) -1)
-
 			if(!frame.repeat && !frame.hold && frame.index >= finalIndex){
 
 				var next = action.stack.pop();
 				if(next == action.value) next = action.stack.pop()
 				action.value = next || 'idle'
+			}
 
+			var frame_update = sprite.image.src.indexOf(action.value) == -1
+
+			if(frame_update){
 				sprite.image = window['s_'+name.value+'_'+action.value+'_'+position.value]
 				//mixin action settings to the frame
 				C('Frame', action.config[action.value], id )
@@ -106,6 +109,30 @@ systems = {
 					}
 				})
 			})
+		})
+	},
+
+	Landed: function () {
+		_.each( C('Collided'), function(collided, id){
+			var landed;
+			_.each(collided.collisions,function(collision, against_id){
+				var response = collision.response
+				if(response.overlapN.y && !response.overlapN.x){
+					landed = true;
+				}
+			})
+			landed && C('Landed',{},id) && C('RemoveCategory', {name: 'Landed'})
+		})
+	},
+
+	CancelFall: function(){
+		//todo-james Make the action update, with config and idle default etc, handled by another system
+		_.each( C('Landed'), function(landed, id){
+			var action = C('Action',id)
+
+			//value and stack-1 both the same
+
+			action.value = action.value == 'fall' || action.value == 'jump' ? action.stack.pop() || 'idle' : action.value
 		})
 	},
 
