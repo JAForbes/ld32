@@ -68,14 +68,16 @@ systems = {
 				action.value = next || 'idle'
 			}
 
-			var frame_update = sprite.image.src.indexOf(action.value) == -1
+			var position_update = sprite.image.src.indexOf(position.name) == -1
+			var frame_update = sprite.image.src.indexOf(action.value) == -1 || position_update
 
 			if(frame_update){
 				sprite.image = window['s_'+name.value+'_'+action.value+'_'+position.value]
 				//mixin action settings to the frame
 				C('Frame', action.config[action.value], id )
 				//reset the frame
-				frame.index = 0
+
+				!position_update && (frame.index = 0)
 			}
 		})
 	},
