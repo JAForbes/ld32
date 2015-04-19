@@ -28,6 +28,15 @@ var actions = {
 }
 
 var player = C({
+	Procedure: {
+		steps: [
+			{ time: 100, components: { Position: {value: 'left' } } },
+			{ time: 100, components: { Position: {value: 'right' , test:true} } },
+			{ time: 1, components: { PushActions: { actions: ['dead','die']} } },
+		],
+		current: 0,
+		clock: 0
+	},
 	Angle: { value: 0 },
 	Location: { x: 50, y: 130 },
 	Dimensions: { width:16, height: 32 },
@@ -61,7 +70,6 @@ var player = C({
 			Uncollide: {}
 		},
 		Projectile: {
-			//todo-james create a component for every action so you can react to them via Has
 			PushActions: { actions: ['dead','die']},
 		}
 	},
@@ -92,7 +100,12 @@ var player = C({
 		}
 	},
 	SAT: {},
-	SATSync: {}
+	SATSync: {},
+	// Repeat: {
+	// 	Log: {
+	// 		component: { message: 'Repeating message'}, remaining: 100
+	// 	}
+	// }
 })
 
 var cameraBot = C({
@@ -147,6 +160,7 @@ var overlord = C({
 })
 
 var activeSystems = [
+	'Procedure',
 	'Screen',
 	'Camera',
 	'PushActions',
@@ -178,7 +192,8 @@ var activeSystems = [
 	'DeleteEntity',
 	'RemoveComponent',
 	'RemoveCategory',
-	'RemoveEntity'
+	'RemoveEntity',
+	'Repeat'
 ]
 
 loop = function(){

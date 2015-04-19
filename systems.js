@@ -317,6 +317,60 @@ systems = {
 		C.components.Log && C('RemoveCategory', {name: 'Log'})
 	},
 
+	/*
+
+		Procedure: {
+			steps: [
+				{ time: 10, components: { Position: {value: 'left' } } },
+				{ time: 10, components: { Position: {value: 'right' } } },
+			],
+			current: 0,
+			clock: 0
+		}
+	*/
+	Procedure: function(){
+		_.each( C('Procedure'), function(procedure, id){
+
+			var current = procedure.steps[procedure.current];
+
+			if(procedure.clock == 0 && current){
+
+				//activate new procedure
+				_.each( current.components, function( data, type){
+
+					C(type, data, id)
+				} )
+			}
+			procedure.clock++
+
+			if(current && procedure.clock > current.time ){
+				//reset the clock and jump to the next procedure
+				procedure.clock = 0
+				procedure.current++
+			}
+			//Kill the procedure if we have no more steps
+			if(procedure.current >= procedure.steps.length){
+				C('RemoveComponent', {name: 'Procedure', entity: id})
+			}
+		})
+	},
+
+	Repeat: function(){
+		_.each(C('Repeat'), function(repeat, id){
+
+			_.each(repeat, function(settings, componentName){
+
+				if( settings.remaining >= 1){
+					var removed = !(C.components[componentName] && C.components[componentName][id])
+					if(removed){
+						settings.remaining--
+						C(componentName, _.cloneDeep(settings.component), id)
+					}
+				}
+			})
+		})
+	},
+
 	// If something exists globally add some components to your self
 	Has: function(){
 		var CategoryAge = C.CategoryAge
