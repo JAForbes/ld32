@@ -216,6 +216,43 @@ systems = {
 		})
 	},
 
+	Sight: function(){
+		_.each( C('See'), function(sightGroups, entity_id){
+			_.each(sightGroups, function(componentsToActivate, groupName){
+				_.each(C(groupName), function(componentFound, other_id){
+					var a = C(entity_id)
+					var b = C(other_id)
+
+					var direction = b.Location.x < a.Location.x ? 'left' : 'right'
+					var correctDirection = direction == a.Position.value
+
+					var top = b.Location.y - b.Dimensions.height/2
+					var bottom = b.Location.y + b.Dimensions.height/2
+
+					var sightY = a.Location.y + a.Sight.offset.y
+					var correctHeight = sightY < bottom && sightY > top
+					var correctRange = a.Sight.range > Math.abs(b.Location.x - a.Location.x)
+
+					if( correctDirection && correctHeight && correctRange ){
+						//todo-james move the sight action to another system,
+						//keep detection separate so other systems can make use of sight
+
+						C(componentsToActivate, entity_id)
+					}
+				})
+			})
+		})
+
+
+	},
+
+	Log: function(){
+		_.each( C('Log'), function(log, entity_id){
+			console.log(log.message)
+		})
+		C.components.Log && C('RemoveCategory', {name: 'Log'})
+	},
+
 	// If something exists globally add some components to your self
 	Has: function(){
 		var CategoryAge = C.CategoryAge

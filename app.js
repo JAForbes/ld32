@@ -40,6 +40,7 @@ var player = C({
 	Velocity: { x:0.5, y: 0.5 },
 	Gravity: { value: 0.4 },
 	Name: { value: 'player' },
+	Player: {},
 	Friction: { value: 0.9 },
 	Action: {
 		stack: [] , value: 'idle',
@@ -64,12 +65,12 @@ var player = C({
 	},
 	Has: {
 		'Key_A|Key_LEFT': {
-			Accelerate: { component: {x: -0.25} },
+			Accelerate: { component: {x: -0.1} },
 			Position: { component: {value: 'left'}},
 			PushActions: { component: {actions: ['run']} }
 		},
 		'Key_D|Key_RIGHT': {
-			Accelerate: { component: {x: 0.25} },
+			Accelerate: { component: {x: 0.1} },
 			Position: { component: {value: 'right'}} ,
 			PushActions: { component: {actions: ['run']} }
 		},
@@ -130,6 +131,14 @@ var overlord = C({
 			Uncollide: {}
 		}
 	},
+	//todo-james Write sight systems, render the sight ray
+	//todo-james Log system
+	Sight: { range: 75, offset: {x:0, y: -10} },
+	See: {
+		Player: {
+			Log: { message: 'I saw a player' }
+		}
+	}
 })
 
 var activeSystems = [
@@ -144,6 +153,8 @@ var activeSystems = [
 	'ComponentAge',
 	'SAT_sync',
 	'SAT',
+	'Sight',
+	'Log',
 	'Has',
 	'Had',
 	'Accelerate',
