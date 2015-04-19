@@ -29,10 +29,9 @@ systems = {
 	},
 
 	//todo-james Have a general push component/system
-	//todo-james Don't push the same thing twice, or call PopActions before hand in the Has hash
 	PushActions: function(){
 		_.each( C('PushActions'), function(pushActions, id){
-			C('Action',id).stack = C('Action',id).stack.concat(pushActions.actions)
+			C('Action',id).stack = _.unique(C('Action',id).stack.concat(pushActions.actions))
 		})
 		C.components.PushActions && C('RemoveCategory', {name: 'PushActions'})
 	},
@@ -65,10 +64,11 @@ systems = {
 
 			if(!frame.repeat && !frame.hold && frame.index >= finalIndex){
 
-				action.value = action.stack.pop() || 'idle'
+				var next = action.stack.pop();
+				if(next == action.value) next = action.stack.pop()
+				action.value = next || 'idle'
 
 				sprite.image = window['s_'+name.value+'_'+action.value+'_'+position.value]
-
 				//mixin action settings to the frame
 				C('Frame', action.config[action.value], id )
 				//reset the frame

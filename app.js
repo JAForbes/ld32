@@ -40,7 +40,6 @@ var player = C({
 	Acceleration: { x:0, y:0 },
 	Velocity: { x:0.5, y: 0.5 },
 	Gravity: { value: 0.4 },
-
 	Name: { value: 'player' },
 	Action: {
 		stack: [] , value: 'idle',
@@ -50,6 +49,7 @@ var player = C({
 			//todo-james alter hold property on jump with some other system
 			//that analyses if you are still in the air
 			jump: { repeat: false, play_speed: 0.3 },
+			fall: { repeat: true, play_speed: 0.3 },
 			run: { repeat: true, play_speed: 0.3 },
 			standup: { repeat: false, play_speed: 0.3 }
 		}
@@ -72,15 +72,15 @@ var player = C({
 			Position: { component: {value: 'right'}} ,
 		},
 		'Key_S|Key_DOWN': {
-			PushActions: { component: {actions: ['crouch']}, every: Infinity }
-		},
-		'Key_Released_S|Key_Released_DOWN': {
 			PushActions: { component: {actions: ['standup']}, every: Infinity }
 		},
 		'Key_W|Key_UP': {
 			Accelerate: { component: {y: -1} },
 			PushActions: { component: {actions: ['jump']}, every: Infinity }
 		},
+		'Landed': {
+			PopActions: {}
+		}
 	},
 	SAT: {}
 })

@@ -15,6 +15,7 @@ img {
 		<img id='s_player_idle_right' src='./img/player.png'></img>
 		<img id='s_player_standup_right' src='./img/player_standup_right.png'></img>
 		<img id='s_player_jump_right' src='./img/player_jump_right.png'></img>
+		<img id='s_player_fall_right' src='./img/player_fall_right.png'></img>
 	</div>
 </body>
 <script>
@@ -38,6 +39,7 @@ var can = document.createElement('canvas')
 s_player_idle_left = flipHorizontal(can, s_player_idle_right)
 s_player_standup_left = flipHorizontal(can, s_player_standup_right)
 s_player_jump_left = flipHorizontal(can, s_player_jump_right)
+s_player_fall_left = flipHorizontal(can, s_player_fall_right)
 </script>
 <script src='node_modules/sat/SAT.js'></script>
 <script src='lib/lodash.min.js'></script>
