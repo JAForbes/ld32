@@ -21,6 +21,13 @@ var level = C({
 	}
 })
 
+var actions = {
+	idle: { repeat: false },
+	jump: { repeat: false },
+	run: { repeat: true },
+	crouch: { repeat: false }
+}
+
 var player = C({
 	Angle: { value: 0 },
 	Scale: { x: 1, y: 1 },
@@ -31,15 +38,14 @@ var player = C({
 	Acceleration: { x:0, y:0 },
 	Velocity: { x:0.5, y: 0.5 },
 	Gravity: { value: 0.4 },
+
+	Name: { value: 'player' },
+	Action: { stack: [] , value: 'idle' },
+	Position: { value: 'right' },
+
 	CollidesWith: {
 		Solid: {
-			Uncollide: {},
-			//todo-james need a more advanced way to trigger different animations and transitions
-			//kind of like the system in Provider, actions, positions, but with transitions between
-			//e.g. Landing animation when landing, jumping animation when onground and jumping
-			//Maybe `Has` is enough, but you'd need to create components and systems to signify these states
-			Sprite: { image: s_player_idle_right  },
-			Frame: { index: 0 },
+			Uncollide: {}
 		}
 	},
 	Has: {
@@ -68,6 +74,7 @@ var player = C({
 var activeSystems = [
 	'Screen',
 	'Frame',
+	'Action',
 	'DrawSprites',
 	'CollidesWith',
 	'CategoryAge',

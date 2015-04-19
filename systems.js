@@ -17,12 +17,53 @@ systems = {
 			var tiles = sprite.width / sprite.height
 			var finalIndex = (sprite.image.width / frame.tile_width) -1
 
+
 			if(frame.index > finalIndex){
 				if(frame.repeat){
 					frame.index = 0
 				} else {
 					frame.index = finalIndex
 				}
+			}
+		})
+	},
+
+	/*
+		Automatically transitions between different animation sprites.
+
+		If something in the stack has repeat true.  It must be manually popped off the stack.
+		Otherwise this system will manage the transition.
+
+		A convention is used to match actions & positions to images.
+		There must be an image with a global ref of the form
+
+			s_<name.value>_action.value_<position.value>
+
+			s_player_jump_right
+
+		And an actions hash that globally has frame settings for whether to repeat the animation
+
+	*/
+	//todo-james store sprites and action settings as a component instead of globally
+	Action: function(){
+		_.each( C('Action'), function (action, id) {
+			var name = C('Name',id);
+			var position = C('Position',id);
+			var sprite = C('Sprite',id)
+			var frame = C('Frame',id)
+
+			var finalIndex = Math.floor((sprite.image.width / frame.tile_width) -1)
+
+			if(!frame.repeat && frame.index >= finalIndex){
+
+				action.value = action.stack.pop() || 'idle'
+
+				sprite.image = window['s_'+name.value+'_'+action.value+'_'+position.value]
+
+				//mixin action settings to the frame
+				C('Frame', actions[action.value], id )
+				//reset the frame
+				frame.index = 0
 			}
 		})
 	},
