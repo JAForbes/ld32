@@ -291,13 +291,15 @@ systems = {
 	Attack: function(){
 		_.each( C('Attack'), function(attack, id){
 			var target = C('Target', id).entity
+			var target_location = C('Location', target)
 			var location = C('Location',id)
 			//todo-james Shoot a projectile every frame?
+			var direction = target_location.x > location.x ? 1 : -1
 			C({
 				Angle: { value: 0 },
 				Sprite: { image: s_laser },
-				Location: {x: location.x-13, y: location.y + 13},
-				Velocity: { x: -10, y: 0 },
+				Location: {x: location.x + (direction*13), y: location.y + 13},
+				Velocity: { x: 10 * direction, y: 0 },
 				Dimensions: { width: 16, height: 4 },
 				SAT: {},
 				SATSync: {},

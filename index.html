@@ -59,7 +59,7 @@ flipHorizontal = function(can, original, tile_width){
 
 }
 var can = document.createElement('canvas')
-;['idle','standup','jump','fall','crouch','run']
+;['idle','standup','jump','fall','crouch','run','die','dead']
 	.forEach(function(name){
 		window['s_player_'+name+'_left'] = flipHorizontal(can, window['s_player_'+name+'_right'],16)
 	})
