@@ -4,11 +4,12 @@ document.body.appendChild(
 )
 
 var game = C({
+	Camera: { tracking: 3 , last_position: {x:0, y:0 }, scale: 8},
 	Screen: {
 		canvas: canvas,
 		context: canvas.getContext('2d'),
 		ratio: 1,
-		scale: 2
+		scale:1
 	},
 	TileMaps: TileMaps,
 	DrawOrder: { groups: ['Sprite'] }
@@ -32,7 +33,6 @@ var actions = {
 
 var player = C({
 	Angle: { value: 0 },
-	Scale: { x: 1, y: 1 },
 	Location: { x: 40, y: 150 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player_idle_right },
@@ -95,9 +95,26 @@ var player = C({
 	SATSync: {}
 })
 
+var cameraBot = C({
+		Dimensions: { width: 50, height: 50 },
+		Location: { x:10, y:14 },
+		Velocity: { x:0, y: 0},
+		Dimensions: { width: 32, height: 32},
+		Angle: { value: 0 },
+		Particle: {},
+		Acceleration: { x:0 , y:0 },
+		//Stability of camera: Screenshake
+		Friction: { value: 0.9 },
+		//Don't see past the boundary
+		PanBoundary: { x:-1200, y:-1200, width: 2400, height: 2400 }
+	})
+	C('Tether',{ entity: player , elasticity: 0.1 },cameraBot)
+	C('Camera',game).tracking = cameraBot
+
 
 var activeSystems = [
 	'Screen',
+	'Camera',
 	'PushActions',
 	'Action',
 	'Frame',
@@ -117,6 +134,7 @@ var activeSystems = [
 	'CancelFall', //todo-james figure out a way to use Has instead of writing a new system for disabling fall
 	'CancelAction',
 	'Friction',
+	'Tether',
 	'Move',
 	'DeleteEntity',
 	'RemoveComponent',

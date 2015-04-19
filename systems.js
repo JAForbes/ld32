@@ -3,7 +3,6 @@ systems = {
 		_.each(C('Screen'), function(screen, id){
 			screen.canvas.width = screen.ratio * window.innerWidth
 			screen.canvas.height = screen.ratio * window.innerHeight
-			screen.context.scale(screen.scale,screen.scale)
 			screen.context.mozImageSmoothingEnabled =
 			screen.context.msImageSmoothingEnabled =
 			screen.context.imageSmoothingEnabled = false;
@@ -25,6 +24,54 @@ systems = {
 					frame.index = finalIndex
 				}
 			}
+		})
+	},
+
+	Camera: function(){
+		_.each( C('Camera'), function(camera, id){
+
+			var screen = C('Screen',id)
+			camera.lag = camera.lag || 25
+			camera.last_position = camera.last_position || {x:0,y:0}
+			var track_position = C('Location',camera.tracking)
+			var position = {
+				x: track_position.x || camera.last_position.x,
+				y: track_position.y || camera.last_position.y
+			}
+
+			var offset = { x: 0, y: 0 };
+			var dx = position.x - camera.last_position.x
+			var dy = position.y - camera.last_position.y
+
+			offset.x = camera.last_position.x + dx//(dx/camera.lag) * 0.5
+			offset.y = camera.last_position.y + dy//(dy/camera.lag) * 0.5
+
+
+
+			screen.context.scale(camera.scale,camera.scale)
+			screen.context.translate(-offset.x,-offset.y)
+			screen.context.translate(screen.canvas.width/(2*camera.scale),screen.canvas.height/(2*camera.scale))
+
+			camera.last_position = offset;
+		})
+	},
+
+	Tether: function(){
+		_.each(C('Tether'),function(tether,id){
+			var other = C('Location',tether.entity)
+			if( _.isEmpty(other) ){
+				other = tether.last_position || {x:0,y:0}
+			}
+			var p = C('Location',id)
+			var dx = Math.abs(p.x - other.x)
+			var dy = Math.abs(p.y - other.y)
+			var angle = C('Angle',id).value = Math.atan2(other.y-p.y, other.x-p.x)
+
+			var acceleration = C('Acceleration', id)
+			acceleration.x += Math.cos(angle) * dx * tether.elasticity
+			acceleration.y += Math.sin(angle) * dy * tether.elasticity
+			tether.last_position = { x: other.x, y: other.y}
+
 		})
 	},
 
