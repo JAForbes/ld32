@@ -8,11 +8,14 @@ systems.SAT = function(){
 			var satA = C('SAT',a)
 			var satB = C('SAT',b)
 			var response = new SAT.Response()
+
+
 			var collided = SAT.testPolygonPolygon(
 				satA.box.toPolygon(),
 				satB.box.toPolygon(),
 				response
 			) && response
+
 
 			if(collided){
 
@@ -39,9 +42,10 @@ systems.SAT = function(){
 
 
 systems.SAT_sync = function(){
-	_.each(C('SAT'),function(sat,id){
-
+	_.each(C('SATSync'),function(satSync,id){
+		var sat = C('SAT',id)
 		sat.box = new SAT.Box()
+
 
 		var d = C('Dimensions',id)
 

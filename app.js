@@ -86,7 +86,8 @@ var player = C({
 			CancelAction: { action:'crouch' }
 		}
 	},
-	SAT: {}
+	SAT: {},
+	SATSync: {}
 })
 
 
@@ -129,19 +130,23 @@ LoadTiles()
 		_.each(TileMaps, function(level){
 			level.layers.forEach(function(layer){
 				layer.meta.forEach(function(meta){
-					//todo-james Need to use Tiled objects for collision instead of tiles
-					//too performance intensive, and wasteful.  Already slows down with a tiny level.
 					C({
 						Location: { x: meta.x, y: meta.y },
 						Dimensions: {width: level.tilewidth, height: level.tileheight},
 						Sprite: { image: level.sprites[meta.id-1] },
-
-						//todo-james set collision and other properties conditionally based on Tiled flags
-						SAT: {},
-						CollidesWith: {},
-						Solid: {}
 					})
 				})
+				if(layer.objects){
+					layer.objects.forEach(function(object){
+
+						C({
+						    CollidesWith: {},
+						    SAT: { box: new SAT.Box(new SAT.Vector(object.x,object.y), object.width, object.height) },
+						    Solid: {},
+						    TiledProps: object.properties
+						})
+					})
+				}
 			})
 		})
 		TileMaps.bigger.layers[0].meta.forEach(function(meta,i){

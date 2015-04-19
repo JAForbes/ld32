@@ -24,90 +24,9 @@
          "name":"Collision",
          "objects":[
                 {
-                 "height":0,
-                 "id":1,
-                 "name":"",
-                 "polygon":[
-                        {
-                         "x":0,
-                         "y":0
-                        }, 
-                        {
-                         "x":87,
-                         "y":-98
-                        }, 
-                        {
-                         "x":722,
-                         "y":-95
-                        }, 
-                        {
-                         "x":722,
-                         "y":-273
-                        }, 
-                        {
-                         "x":2,
-                         "y":-273
-                        }, 
-                        {
-                         "x":2,
-                         "y":-224
-                        }, 
-                        {
-                         "x":-45,
-                         "y":-224
-                        }, 
-                        {
-                         "x":-44,
-                         "y":-192
-                        }, 
-                        {
-                         "x":-60,
-                         "y":-193
-                        }, 
-                        {
-                         "x":-61,
-                         "y":-207
-                        }, 
-                        {
-                         "x":-77,
-                         "y":-208
-                        }, 
-                        {
-                         "x":-79,
-                         "y":-222
-                        }, 
-                        {
-                         "x":-141,
-                         "y":-222
-                        }, 
-                        {
-                         "x":-140,
-                         "y":-16
-                        }, 
-                        {
-                         "x":-126,
-                         "y":-16
-                        }, 
-                        {
-                         "x":-126,
-                         "y":-1
-                        }, 
-                        {
-                         "x":-61,
-                         "y":-1
-                        }, 
-                        {
-                         "x":-62,
-                         "y":-52
-                        }, 
-                        {
-                         "x":-46,
-                         "y":-51
-                        }, 
-                        {
-                         "x":-45,
-                         "y":-1
-                        }],
+                 "height":31,
+                 "id":17,
+                 "name":"Valley",
                  "properties":
                     {
 
@@ -115,9 +34,144 @@
                  "rotation":0,
                  "type":"",
                  "visible":true,
-                 "width":0,
-                 "x":157,
-                 "y":287
+                 "width":192.5,
+                 "x":0,
+                 "y":288.5
+                }, 
+                {
+                 "height":16.1818181818182,
+                 "id":20,
+                 "name":"Steps",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32.1818181818182,
+                 "x":159.636363636364,
+                 "y":272
+                }, 
+                {
+                 "height":15.6363636363636,
+                 "id":21,
+                 "name":"Steps",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":175.636363636364,
+                 "y":255.636363636364
+                }, 
+                {
+                 "height":15.6363636363637,
+                 "id":22,
+                 "name":"Steps",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":32,
+                 "x":191.636363636364,
+                 "y":239.818181818182
+                }, 
+                {
+                 "height":15.6363636363636,
+                 "id":23,
+                 "name":"Steps",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.8181818181818,
+                 "x":207.818181818182,
+                 "y":223.636363636364
+                }, 
+                {
+                 "height":15.4545454545455,
+                 "id":24,
+                 "name":"Steps",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":31.4545454545455,
+                 "x":224.181818181818,
+                 "y":208
+                }, 
+                {
+                 "height":18,
+                 "id":25,
+                 "name":"Plateau",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":654.666666666667,
+                 "x":240,
+                 "y":190.666666666667
+                }, 
+                {
+                 "height":15.3333333333333,
+                 "id":26,
+                 "name":"Island 1",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":48,
+                 "x":143.333333333333,
+                 "y":128
+                }, 
+                {
+                 "height":33.3333333333333,
+                 "id":27,
+                 "name":"Island 2",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":110.666666666667
+                }, 
+                {
+                 "height":48.6666666666667,
+                 "id":29,
+                 "name":"Pillar",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":16,
+                 "x":95.3333333333333,
+                 "y":239.333333333333
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -126,7 +180,7 @@
          "x":0,
          "y":0
         }],
- "nextobjectid":2,
+ "nextobjectid":30,
  "orientation":"orthogonal",
  "properties":
     {
