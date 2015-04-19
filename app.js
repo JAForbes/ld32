@@ -106,6 +106,8 @@ var player = C({
 	// 		component: { message: 'Repeating message'}, remaining: 100
 	// 	}
 	// }
+
+
 })
 
 var cameraBot = C({
@@ -126,18 +128,46 @@ var cameraBot = C({
 
 
 var overlord = C({
-	Repeat: {
-		Procedure: {
-			component: {
-				steps: [
-					{ time: 200, components: { Position: {value: 'left' } } },
-					{ time: 200, components: { Position: {value: 'right'} } },
-				],
-				current: 0,
-				clock: 0
+	// Repeat: {
+	// 	Procedure: {
+	// 		component: {
+	// 			steps: [
+	// 				{ time: 200, components: { Position: {value: 'left' } } },
+	// 				{ time: 200, components: { Position: {value: 'right'} } },
+	// 			],
+	// 			current: 0,
+	// 			clock: 0
+	// 		},
+	// 		remaining: Infinity
+	// 	}
+	// },
+	Procedure: {
+		steps: [
+			{ time: 250,
+				components: {
+					Position: {value: 'left' },
+					Velocity: { x: -1, y: 0 },
+					Friction: { value: 1 },
+					PushActions: { actions: ['run'] },
+				}
 			},
-			remaining: Infinity
-		}
+			{ time: 250,
+				components: {
+					Position: {value: 'right' },
+					Velocity: { x: 1, y: 0 },
+					Friction: { value: 1 },
+					PushActions: { actions: ['run'] },
+				}
+			},
+			{ time: 1,
+				components: {
+					Friction: { value: 0.9 },
+					CancelAction: { action: 'run' }
+				}
+			},
+		],
+		current: 0,
+		clock: 0
 	},
 	Enemy: {},
 	Angle: { value: 0 },
@@ -154,7 +184,11 @@ var overlord = C({
 	Action: {
 		stack: [] , value: 'idle',
 		hold: false,
-		config: { idle: { repeat: false, play_speed: 0.3 } }
+		config: {
+			idle: { repeat: false, play_speed: 0.3 },
+			run: { repeat: true, play_speed: 0.3 },
+		}
+
 	},
 	SAT: {},
 	SATSync: {},
@@ -167,7 +201,7 @@ var overlord = C({
 	Sight: { range: 75, offset: {x:0, y: -10} },
 	See: {
 		Player: {
-			Attack: {}
+	//		Attack: {}
 		}
 	}
 })
