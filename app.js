@@ -41,6 +41,7 @@ var player = C({
 	Velocity: { x:0.5, y: 0.5 },
 	Gravity: { value: 0.4 },
 	Name: { value: 'player' },
+	Friction: { value: 0.9 },
 	Action: {
 		stack: [] , value: 'idle',
 		hold: false,
@@ -76,7 +77,7 @@ var player = C({
 			PushActions: { component: {actions: ['standup','crouch']}, every: Infinity }
 		},
 		'Key_W|Key_UP': {
-			Accelerate: { component: {y: -1} },
+			Accelerate: { component: {y: -1 }, },
 			PushActions: { component: {actions: ['fall','jump']}, every: Infinity }
 		}
 	},
@@ -109,6 +110,7 @@ var activeSystems = [
 	'Landed',
 	'CancelFall', //todo-james figure out a way to use Has instead of writing a new system for disabling fall
 	'CancelAction',
+	'Friction',
 	'Move',
 	'DeleteEntity',
 	'RemoveComponent',

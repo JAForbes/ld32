@@ -296,6 +296,14 @@ systems = {
 		C.components.Accelerate &&C('RemoveCategory', {name: 'Accelerate'})
 	},
 
+	Friction: function(){
+		_.each( C('Friction'), function(friction, id){
+			var velocity = C('Velocity',id)
+			velocity.x *= friction.value
+			velocity.y *= friction.value
+		})
+	},
+
 	Move: function(){
 		_.each(C('Velocity'), function(velocity, id){
 			var location = C('Location',id)
