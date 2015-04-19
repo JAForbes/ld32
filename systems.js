@@ -166,11 +166,12 @@ systems = {
 							var sourceX = Math.floor(frame.index) * frame.tile_width
 							var sourceY = 0
 							screen.context
-								.drawImage(sprite.image, sourceX, sourceY, frame.tile_width, frame.tile_height, location.x, location.y, dimensions.width, dimensions.height )
+								.drawImage(sprite.image, sourceX, sourceY, frame.tile_width, frame.tile_height,
+														location.x, location.y, dimensions.width, dimensions.height )
 
 						} else {
 							screen.context
-								.drawImage(sprite.image, location.x, location.y, dimensions.width, dimensions.height)
+								.drawImage(sprite.image,location.x, location.y, dimensions.width, dimensions.height )
 						}
 					}
 				})

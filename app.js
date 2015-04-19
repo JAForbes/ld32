@@ -136,7 +136,7 @@ var overlord = C({
 	Sight: { range: 75, offset: {x:0, y: -10} },
 	See: {
 		Player: {
-			Log: { message: 'I saw a player' }
+			//Log: { message: 'I saw a player' }
 		}
 	}
 })
@@ -184,21 +184,26 @@ LoadTiles()
 		_.each(TileMaps, function(level){
 			level.layers.forEach(function(layer){
 				layer.meta.forEach(function(meta){
-					C({
+					var entity = C({
 						Location: { x: meta.x, y: meta.y },
 						Dimensions: {width: level.tilewidth, height: level.tileheight},
-						Sprite: { image: level.sprites[meta.id-1] },
+						Sprite: { image: level.sprites[meta.id-1] }
 					})
+					if(layer.properties){
+						C('TiledProps', layer.properties, entity)
+					}
 				})
 				if(layer.objects){
 					layer.objects.forEach(function(object){
 
-						C({
+						var entity = C({
 						    CollidesWith: {},
 						    SAT: { box: new SAT.Box(new SAT.Vector(object.x,object.y), object.width, object.height) },
-						    Solid: {},
-						    TiledProps: object.properties
+						    Solid: {}
 						})
+						if(layer.properties){
+							C('TiledProps', layer.properties, entity)
+						}
 					})
 				}
 			})
