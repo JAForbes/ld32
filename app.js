@@ -28,14 +28,18 @@ var actions = {
 }
 
 var player = C({
-	Procedure: {
-		steps: [
-			{ time: 100, components: { Position: {value: 'left' } } },
-			{ time: 100, components: { Position: {value: 'right' , test:true} } },
-			{ time: 1, components: { PushActions: { actions: ['dead','die']} } },
-		],
-		current: 0,
-		clock: 0
+	Repeat: {
+		Procedure: {
+			component: {
+				steps: [
+					{ time: 100, components: { Position: {value: 'left' } } },
+					{ time: 100, components: { Position: {value: 'right' , test:true} } },
+				],
+				current: 0,
+				clock: 0
+			},
+			remaining: Infinity
+		}
 	},
 	Angle: { value: 0 },
 	Location: { x: 50, y: 130 },
