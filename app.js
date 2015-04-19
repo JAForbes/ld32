@@ -186,7 +186,7 @@ var overlord = C({
 		hold: false,
 		config: {
 			idle: { repeat: false, play_speed: 0.3 },
-			run: { repeat: true, play_speed: 0.3 },
+			run: { repeat: true, play_speed: 0.06 },
 		}
 
 	},
