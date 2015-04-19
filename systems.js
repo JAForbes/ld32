@@ -260,6 +260,7 @@ systems = {
 							//keep detection separate so other systems can make use of sight
 
 							C(componentsToActivate, entity_id)
+							C('Target',{ entity: other_id}, entity_id)
 						}
 					}
 				})
@@ -267,6 +268,28 @@ systems = {
 		})
 
 
+	},
+
+	//todo-james have an every property maybe...
+	//todo-james GC off screen entities
+	Attack: function(){
+		_.each( C('Attack'), function(attack, id){
+			var target = C('Target', id).entity
+			var location = C('Location',id)
+			//todo-james Shoot a projectile every frame?
+			C({
+				Angle: { value: 0 },
+				Sprite: { image: s_laser },
+				Location: {x: location.x, y: location.y + 16},
+				Velocity: { x: -10, y: 0 },
+				Dimensions: { width: 16, height: 4 },
+				//SAT: {},
+				//CollidesWith: {},
+				Projectile: {},
+				Acceleration: { x:0, y:0 },
+			})
+		})
+		C('RemoveCategory', {name: 'Attack'})
 	},
 
 	Log: function(){

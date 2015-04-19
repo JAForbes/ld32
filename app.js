@@ -11,7 +11,7 @@ var game = C({
 		ratio: 1
 	},
 	TileMaps: TileMaps,
-	DrawOrder: { groups: ['Tile','Enemy','Crate','Player'] }
+	DrawOrder: { groups: ['Tile','Enemy','Crate','Player','Projectile'] }
 })
 
 var level = C({
@@ -138,7 +138,7 @@ var overlord = C({
 	Sight: { range: 75, offset: {x:0, y: -10} },
 	See: {
 		Player: {
-			Log: { message: 'I saw a player' }
+			Attack: {}
 		}
 	}
 })
@@ -157,6 +157,7 @@ var activeSystems = [
 	'SAT',
 	'Hidden',
 	'Sight',
+	'Attack',
 	'Log',
 	'Has',
 	'Had',
