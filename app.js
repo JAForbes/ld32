@@ -50,6 +50,8 @@ var player = C({
 			run: { repeat: false, play_speed: 0.06 },
 			standup: { repeat: false, play_speed: 0.3 },
 			crouch: { repeat: true, play_speed: 0.3 },
+			die: { repeat: false, play_speed: 0.3 },
+			dead: { repeat: true, play_speed: 0.3 }
 		}
 
 	},
