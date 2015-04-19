@@ -8,8 +8,7 @@ var game = C({
 	Screen: {
 		canvas: canvas,
 		context: canvas.getContext('2d'),
-		ratio: 1,
-		scale:1
+		ratio: 1
 	},
 	TileMaps: TileMaps,
 	DrawOrder: { groups: ['Sprite'] }

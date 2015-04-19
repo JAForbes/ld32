@@ -134,28 +134,44 @@ systems = {
 
 		_.each(C('DrawOrder'), function(drawOrder, id){
 			var screen = C('Screen',id)
+			var camera = C('Camera', id)
+			var halfScreenWidth = (screen.canvas.width / camera.scale) /2
+			var halfScreenHeight = (screen.canvas.width / camera.scale) /2
+			var edge = {}
+			edge.left = camera.last_position.x - halfScreenWidth
+			edge.right = camera.last_position.x + halfScreenWidth
+			edge.top = camera.last_position.y - halfScreenHeight
+			edge.bottom = camera.last_position.y + halfScreenHeight
+
+
 			drawOrder.groups.forEach(function(group){
 				_.each(C(group), function(someComponent, entity_id){
-					var sprite = C('Sprite',entity_id)
+
 					var location = C('Location',entity_id)
 					var dimensions = C('Dimensions',entity_id)
-					var frame = C('Frame', entity_id)
-					var scale = C('Scale', entity_id)
 
+					var outside = (
+						location.x + dimensions.width 	< edge.left  ||
+						location.x - dimensions.width 	> edge.right ||
+						location.y + dimensions.height	< edge.top 	 ||
+						location.y - dimensions.height	> edge.bottom
+					)
 
-					if(typeof frame.index != 'undefined'){
+					if(!outside){
+						var sprite = C('Sprite',entity_id)
+						var frame = C('Frame', entity_id)
 
+						if(typeof frame.index != 'undefined'){
 
+							var sourceX = Math.floor(frame.index) * frame.tile_width
+							var sourceY = 0
+							screen.context
+								.drawImage(sprite.image, sourceX, sourceY, frame.tile_width, frame.tile_height, location.x, location.y, dimensions.width, dimensions.height )
 
-
-						var sourceX = Math.floor(frame.index) * frame.tile_width
-						var sourceY = 0
-						screen.context
-							.drawImage(sprite.image, sourceX, sourceY, frame.tile_width, frame.tile_height, location.x, location.y, dimensions.width, dimensions.height )
-
-					} else {
-						screen.context
-							.drawImage(sprite.image, location.x, location.y, dimensions.width, dimensions.height)
+						} else {
+							screen.context
+								.drawImage(sprite.image, location.x, location.y, dimensions.width, dimensions.height)
+						}
 					}
 				})
 			})
