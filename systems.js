@@ -525,6 +525,19 @@ systems = {
 		})
 	},
 
+	Climb: function(){
+		_.each( C('Climber'), function(climber, id){
+			var climb = C('Climb',id)
+			var acceleration = C('Acceleration',id)
+			if( climb.x || climb.y ){
+				climb.x && (acceleration.x += climb.x)
+				climb.y && (acceleration.y += climb.y)
+			}
+		})
+		C.components.Climb && C('RemoveCategory',{name: 'Climb'})
+		C.components.Climber && C('RemoveCategory',{name: 'Climber'})
+	},
+
 	Move: function(){
 		_.each(C('Velocity'), function(velocity, id){
 			var location = C('Location',id)

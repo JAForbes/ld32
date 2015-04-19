@@ -11,7 +11,7 @@ var game = C({
 		ratio: 1
 	},
 	TileMaps: TileMaps,
-	DrawOrder: { groups: ['Tile','Enemy','Crate','Player','Projectile'] }
+	DrawOrder: { groups: ['Tile','Enemy','Crate','Ladder','Player','Projectile'] }
 })
 
 var level = C({
@@ -62,9 +62,18 @@ var player = C({
 		},
 		Projectile: {
 			PushActions: { actions: ['dead','die']},
+		},
+		Climbable: {
+			Climber: {}
 		}
 	},
 	Has: {
+		'Key_W|Key_UP': {
+			Climb: { component: { x:0, y: -0.5 } }
+		},
+		'Key_S|Key_DOWN': {
+			Climb: { component: { x:0, y: 0.5 } }
+		},
 		'Key_A|Key_LEFT': {
 			Accelerate: { component: {x: -0.1} },
 			Position: { component: {value: 'left'}},
@@ -132,7 +141,7 @@ var overlord = C({
 	},
 	Enemy: {},
 	Angle: { value: 0 },
-	Location: { x: 200, y: 150 },
+	Location: { x: 280, y: 200 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player_idle_right },
 	Frame: { play_speed: 0.3, index: 0, repeat: false, tile_width: 16, tile_height: 32 },
@@ -191,6 +200,7 @@ var activeSystems = [
 	'CancelAction',
 	'Friction',
 	'Tether',
+	'Climb',
 	'Move',
 	'GarbageCollection',
 	'DeleteEntity',
