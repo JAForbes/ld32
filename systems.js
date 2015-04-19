@@ -53,7 +53,7 @@ systems = {
 		And an actions hash that globally has frame settings for whether to repeat the animation
 
 	*/
-	//todo-james store sprites and action settings as a component instead of globally
+	//todo-james store sprites as a component instead of globally
 	Action: function(){
 		_.each( C('Action'), function run(action, id) {
 			var name = C('Name',id);
