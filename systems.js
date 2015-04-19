@@ -195,11 +195,12 @@ systems = {
 
 			var action = C('Action',id)
 
+			action.stack = _.without(action.stack, cancel.action)
 			//todo-james handle the idle default within the action system
 			action.value == cancel.action && (
 				(action.value = action.stack.pop() || 'idle')
 			)
-			cancel.stack = _.without(cancel.stack, cancel.action)
+
 		})
 		C.components.CancelAction && C('RemoveCategory', {name: 'CancelAction'})
 	},
