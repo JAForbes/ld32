@@ -29,7 +29,7 @@ var actions = {
 
 var player = C({
 	Angle: { value: 0 },
-	Location: { x: 50, y: 130 },
+	Location: { x: 50, y: 250 },
 	Dimensions: { width:16, height: 32 },
 	Sprite: { image: s_player_idle_right },
 	Frame: { play_speed: 0.3, index: 0, repeat: false, tile_width: 16, tile_height: 32 },
@@ -61,6 +61,8 @@ var player = C({
 			Uncollide: {}
 		},
 		Projectile: {
+			//todo-james fix bug where you can kneel to prevent death because of animation stack
+			//could be a specific system that checks if death is in the stack
 			PushActions: { actions: ['dead','die']},
 		},
 		Climbable: {
@@ -112,7 +114,7 @@ var player = C({
 
 var cameraBot = C({
 		Dimensions: { width: 50, height: 50 },
-		Location: { x:10, y:14 },
+		Location: { x:50, y:250 },
 		Velocity: { x:0, y: 0},
 		Dimensions: { width: 32, height: 32},
 		Angle: { value: 0 },
@@ -126,49 +128,7 @@ var cameraBot = C({
 	C('Tether',{ entity: player , elasticity: 0.1 },cameraBot)
 	C('Camera',game).tracking = cameraBot
 
-
-var overlord = C({
-	// Repeat: {
-	// 	Procedure: {
-	// 		component: {
-	// 			steps: [
-	// 				{ time: 200, components: { Position: {value: 'left' } } },
-	// 				{ time: 200, components: { Position: {value: 'right'} } },
-	// 			],
-	// 			current: 0,
-	// 			clock: 0
-	// 		},
-	// 		remaining: Infinity
-	// 	}
-	// },
-	Procedure: {
-		steps: [
-			{ time: 250,
-				components: {
-					Position: {value: 'left' },
-					Velocity: { x: -1, y: 0 },
-					Friction: { value: 1 },
-					PushActions: { actions: ['run'] },
-				}
-			},
-			{ time: 250,
-				components: {
-					Position: {value: 'right' },
-					Velocity: { x: 1, y: 0 },
-					Friction: { value: 1 },
-					PushActions: { actions: ['run'] },
-				}
-			},
-			{ time: 1,
-				components: {
-					Friction: { value: 0.9 },
-					CancelAction: { action: 'run' }
-				}
-			},
-		],
-		current: 0,
-		clock: 0
-	},
+Guard = {
 	Enemy: {},
 	Angle: { value: 0 },
 	Location: { x: 280, y: 200 },
@@ -201,10 +161,68 @@ var overlord = C({
 	Sight: { range: 75, offset: {x:0, y: -10} },
 	See: {
 		Player: {
-	//		Attack: {}
+			Attack: {}
 		}
 	}
-})
+}
+
+TurningGuard = _.cloneDeep(Guard)
+TurningGuard.Repeat = {
+	Procedure: {
+		component: {
+			steps: [
+				{ time: 200, components: { Position: {value: 'left' } } },
+				{ time: 200, components: { Position: {value: 'right'} } },
+			],
+			current: 0,
+			clock: 0
+		},
+		remaining: Infinity
+	}
+}
+
+PatrollingGuard = _.cloneDeep(Guard)
+PatrollingGuard.Repeat = {
+		Procedure: {
+			component: {
+					steps: [
+						{ time: 250,
+							components: {
+								Position: {value: 'left' },
+								Velocity: { x: -1, y: 0 },
+								Friction: { value: 1 },
+								PushActions: { actions: ['run'] },
+							}
+						},
+						{ time: 250,
+							components: {
+								Position: {value: 'right' },
+								Velocity: { x: 1, y: 0 },
+								Friction: { value: 1 },
+								PushActions: { actions: ['run'] },
+							}
+						},
+						{ time: 1,
+							components: {
+								Friction: { value: 0.9 },
+								CancelAction: { action: 'run' }
+							}
+						},
+					],
+					current: 0,
+					clock: 0
+				},
+			remaining: Infinity
+		}
+}
+
+//create guard
+C(TurningGuard)
+
+//create patrolling guard
+var patrolling = C(PatrollingGuard)
+C('Location', { x: 450, y: -200}, patrolling)
+
 
 var activeSystems = [
 	'Procedure',
