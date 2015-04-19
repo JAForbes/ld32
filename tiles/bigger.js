@@ -12,6 +12,10 @@
          "height":20,
          "name":"Walls",
          "opacity":1,
+         "properties":
+            {
+             "Tile":"true"
+            },
          "type":"tilelayer",
          "visible":true,
          "width":100,

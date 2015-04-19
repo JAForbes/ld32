@@ -11,7 +11,7 @@ var game = C({
 		ratio: 1
 	},
 	TileMaps: TileMaps,
-	DrawOrder: { groups: ['Sprite'] }
+	DrawOrder: { groups: ['Tile','Enemy','Crate','Player'] }
 })
 
 var level = C({
@@ -108,6 +108,7 @@ var cameraBot = C({
 
 
 var overlord = C({
+	Enemy: {},
 	Angle: { value: 0 },
 	Location: { x: 200, y: 150 },
 	Dimensions: { width:16, height: 32 },
