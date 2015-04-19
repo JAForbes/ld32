@@ -55,11 +55,10 @@ flipHorizontal = function(can, original, tile_width){
 
 }
 var can = document.createElement('canvas')
-s_player_idle_left = flipHorizontal(can, s_player_idle_right,16)
-s_player_standup_left = flipHorizontal(can, s_player_standup_right,16)
-s_player_jump_left = flipHorizontal(can, s_player_jump_right,16)
-s_player_fall_left = flipHorizontal(can, s_player_fall_right,16)
-s_player_crouch_left = flipHorizontal(can, s_player_crouch_right,16)
+;['idle','standup','jump','fall','crouch']
+	.forEach(function(name){
+		window['s_player_'+name+'_left'] = flipHorizontal(can, window['s_player_'+name+'_right'],16)
+	})
 </script>
 <script src='node_modules/sat/SAT.js'></script>
 
