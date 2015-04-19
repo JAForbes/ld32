@@ -169,8 +169,8 @@ TurningGuard.Repeat = {
 	Procedure: {
 		component: {
 			steps: [
-				{ time: 200, components: { Position: {value: 'left' } } },
-				{ time: 200, components: { Position: {value: 'right'} } },
+				{ time: 150, components: { Position: {value: 'left' } } },
+				{ time: 150, components: { Position: {value: 'right'} } },
 			],
 			current: 0,
 			clock: 0
