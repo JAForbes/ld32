@@ -23,9 +23,6 @@ var level = C({
 
 var actions = {
 	idle: { repeat: false, play_speed: 0.3 },
-	//todo-james alter hold property on jump with some other system
-	//that analyses if you are still in the air
-	jump: { repeat: false, play_speed: 0.3, hold: false },
 	run: { repeat: true, play_speed: 0.3 },
 	standup: { repeat: false, play_speed: 0.3 }
 }
@@ -133,8 +130,7 @@ var overlord = C({
 			Uncollide: {}
 		}
 	},
-	//todo-james Write sight systems, render the sight ray
-	//todo-james Log system
+	//todo-james render the sight ray
 	Sight: { range: 75, offset: {x:0, y: -10} },
 	See: {
 		Player: {
@@ -166,7 +162,6 @@ var activeSystems = [
 	'Vulnerable',
 	'Uncollide',
 	'Landed',
-	'CancelFall', //todo-james figure out a way to use Has instead of writing a new system for disabling fall
 	'CancelAction',
 	'Friction',
 	'Tether',
@@ -208,9 +203,6 @@ LoadTiles()
 						var entity = C({
 						    CollidesWith: {},
 						    SAT: { box: new SAT.Box(new SAT.Vector(object.x,object.y), object.width, object.height) },
-
-						    //todo-james setup a lot of these custom properties via TiledProps
-
 						})
 						if(layer.properties){
 							var components = _.reduce(layer.properties, function(components, val, key){

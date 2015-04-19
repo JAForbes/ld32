@@ -109,7 +109,7 @@ systems = {
 			var sprite = C('Sprite',id)
 			var frame = C('Frame',id)
 			var finalIndex = Math.floor((sprite.image.width / frame.tile_width) -1)
-			if(!frame.repeat && !frame.hold && frame.index >= finalIndex){
+			if(!frame.repeat && !frame.hold && frame.index >= finalIndex || !action.value){
 
 				var next = action.stack.pop();
 				if(next == action.value) next = action.stack.pop()
@@ -197,24 +197,12 @@ systems = {
 			var action = C('Action',id)
 
 			action.stack = _.without(action.stack, cancel.action)
-			//todo-james handle the idle default within the action system
 			action.value == cancel.action && (
-				(action.value = action.stack.pop() || 'idle')
+				(action.value = action.stack.pop() )
 			)
 
 		})
 		C.components.CancelAction && C('RemoveCategory', {name: 'CancelAction'})
-	},
-
-	CancelFall: function(){
-		//todo-james Make the action update, with config and idle default etc, handled by another system
-		_.each( C('Landed'), function(landed, id){
-			var action = C('Action',id)
-
-			//value and stack-1 both the same
-
-			action.value = action.value == 'fall' || action.value == 'jump' ? action.stack.pop() || 'idle' : action.value
-		})
 	},
 
 	Hidden: function(){
@@ -284,7 +272,6 @@ systems = {
 	},
 
 	//todo-james have an every property maybe...
-	//todo-james GC off screen entities
 	Attack: function(){
 		_.each( C('Attack'), function(attack, id){
 			var target = C('Target', id).entity
