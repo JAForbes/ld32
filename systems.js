@@ -83,6 +83,15 @@ systems = {
 		C.components.PushActions && C('RemoveCategory', {name: 'PushActions'})
 	},
 
+	ReplaceActions: function(){
+		_.each( C('ReplaceActions'), function(replaceActions, id){
+
+			C('Action',id).value = null;
+			C('Action',id).stack = _.unique(replaceActions.actions)
+		})
+		C.components.ReplaceActions && C('RemoveCategory', {name: 'ReplaceActions'})
+	},
+
 	/*
 		Automatically transitions between different animation sprites.
 

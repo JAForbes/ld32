@@ -61,9 +61,7 @@ var player = C({
 			Uncollide: {}
 		},
 		Projectile: {
-			//todo-james fix bug where you can kneel to prevent death because of animation stack
-			//could be a specific system that checks if death is in the stack
-			PushActions: { actions: ['dead','die']},
+			ReplaceActions: { actions: ['dead','die']},
 		},
 		Climbable: {
 			Climber: {}
@@ -229,6 +227,7 @@ var activeSystems = [
 	'Screen',
 	'Camera',
 	'PushActions',
+	'ReplaceActions',
 	'Action',
 	'ActionTag',
 	'Frame',
