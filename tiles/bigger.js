@@ -56,6 +56,21 @@
                  "width":319.390303030303,
                  "x":273.818181818182,
                  "y":175.090909090909
+                }, 
+                {
+                 "height":176,
+                 "id":49,
+                 "name":"",
+                 "properties":
+                    {
+
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":17.3333333333334,
+                 "x":592.666666666667,
+                 "y":15.3333333333333
                 }],
          "opacity":1,
          "properties":
@@ -128,8 +143,35 @@
          "width":100,
          "x":0,
          "y":0
+        }, 
+        {
+         "draworder":"topdown",
+         "height":20,
+         "name":"Trigger",
+         "objects":[
+                {
+                 "height":64.6666666666667,
+                 "id":47,
+                 "name":"End",
+                 "properties":
+                    {
+                     "End":"true"
+                    },
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":46.6666666666666,
+                 "x":546,
+                 "y":109.333333333333
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "width":100,
+         "x":0,
+         "y":0
         }],
- "nextobjectid":46,
+ "nextobjectid":50,
  "orientation":"orthogonal",
  "properties":
     {

@@ -65,6 +65,10 @@ var player = C({
 		},
 		Climbable: {
 			Climber: {}
+		},
+		End: {
+			Log: { message: 'End of Level '},
+			NextLevel: { game: game }
 		}
 	},
 	Has: {
@@ -293,8 +297,9 @@ LoadTiles()
 						    CollidesWith: {},
 						    SAT: { box: new SAT.Box(new SAT.Vector(object.x,object.y), object.width, object.height) },
 						})
-						if(layer.properties){
-							var components = _.reduce(layer.properties, function(components, val, key){
+						if(layer.properties || object.properties){
+							var properties = _.extend({},layer.properties,object.properties)
+							var components = _.reduce(properties, function(components, val, key){
 								components[key] = { value: val }
 								return components;
 							},{})
