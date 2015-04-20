@@ -219,15 +219,26 @@ PatrollingGuard.Repeat = {
 }
 
 //create guard
-C(TurningGuard)
+C(_.cloneDeep(TurningGuard))
+
+//create guard
+var patrolling = C(_.cloneDeep(PatrollingGuard))
+C(patrolling).Location.x = 500
+C(patrolling).Location.y = 150
+
+
+//create guard
+var patrolling = C(_.cloneDeep(PatrollingGuard))
+C(patrolling).Location.x = 200
+C(patrolling).Location.y = 0
 
 //create patrolling guard
-var patrolling = C(PatrollingGuard)
+var patrolling = C(_.cloneDeep(PatrollingGuard))
 C('Location', { x: 450, y: -200}, patrolling)
 
 //create guard
-var turning = C(TurningGuard)
-C(turning).Location.x = 550
+var patrolling = C(_.cloneDeep(PatrollingGuard))
+C(patrolling).Location.x = 750
 
 
 var activeSystems = [
