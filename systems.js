@@ -604,7 +604,10 @@ systems = {
 
 	RemoveComponent: function(){
 		_.each( C('RemoveComponent'), function(removeComponent,id){
-			delete C.components[removeComponent.name][removeComponent.entity]
+			
+			delete C.components[removeComponent.name][removeComponent.entity || id]	
+			
+			
 		})
 		delete C.components.RemoveComponent
 	},
